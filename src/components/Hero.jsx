@@ -1,8 +1,16 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { NavLink } from 'react-router-dom';
-import { Sparkles, Calendar, Users, ArrowRight, ShieldCheck, Zap, Database } from 'lucide-react';
-import Stats from './Stats';
+import React from "react";
+import { motion } from "framer-motion";
+import { NavLink } from "react-router-dom";
+import {
+  Sparkles,
+  Calendar,
+  Users,
+  ArrowRight,
+  ShieldCheck,
+  Zap,
+  Database,
+} from "lucide-react";
+import Stats from "./Stats";
 
 export default function Hero() {
   return (
@@ -10,7 +18,7 @@ export default function Hero() {
       {/* Glow Backdrop */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[25rem] bg-gradient-to-tr from-blue-600/20 via-cyan-500/15 to-transparent rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      <div className="max-w-7x  l mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         {/* Animated Pill Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -43,7 +51,8 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-6 text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed"
         >
-          Empowering Future Data Scientists, AI Engineers and Innovators through practical workshops, flagship hackathons, and cutting-edge research.
+          Empowering Future Data Scientists, AI Engineers and Innovators through
+          practical workshops, flagship hackathons, and cutting-edge research.
         </motion.p>
 
         {/* CTA Buttons */}

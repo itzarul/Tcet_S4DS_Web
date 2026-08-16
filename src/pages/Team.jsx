@@ -1,329 +1,137 @@
-import React, { useEffect, useRef, useCallback } from 'react';
-import { Linkedin, Github, Mail, ExternalLink } from 'lucide-react';
-import { hodData, facultyInchargeData, coreTeam, juniorCoreTeam } from '../data/team';
+import React, { useState } from "react";
+import { hodData, facultyInchargeData, coreTeam } from "../data/team";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import TeamHero from "../components/team/TeamHero";
+import TeamMemberEditorial from "../components/team/TeamMemberEditorial";
 
-/* ──────────────────────────────────────────────
-   Intersection Observer hook
-   Adds .is-visible to observed elements on scroll
-   ────────────────────────────────────────────── */
-function useScrollReveal(rootMargin = '0px 0px -60px 0px', threshold = 0.15) {
-  const observerRef = useRef(null);
-  const observedSet = useRef(new Set());
+import "./Team.css";
 
-  // Create observer once, lazily
-  const getObserver = useCallback(() => {
-    if (!observerRef.current) {
-      observerRef.current = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              observerRef.current?.unobserve(entry.target);
-              observedSet.current.delete(entry.target);
-            }
-          });
-        },
-        { rootMargin, threshold }
-      );
-    }
-    return observerRef.current;
-  }, [rootMargin, threshold]);
+const CURRENT_PERIOD = "2025–26";
+const FOUNDATION_PERIOD = "2024–25";
 
-  // Ref callback — observes each element immediately when mounted
-  const register = useCallback(
-    (el) => {
-      if (el && !observedSet.current.has(el)) {
-        observedSet.current.add(el);
-        getObserver().observe(el);
-      }
-    },
-    [getObserver]
-  );
+const foundationTeam = [hodData, facultyInchargeData];
 
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      observerRef.current?.disconnect();
-      observerRef.current = null;
-      observedSet.current.clear();
-    };
-  }, []);
-
-  return register;
-}
-
-/* ──────────────────────────────────────────────
-   Helpers
-   ────────────────────────────────────────────── */
-const ROLE_COLOR_MAP = {
-  Chairperson: 'amber',
-  'Vice Chairperson': 'amber',
-  Secretary: 'rose',
-  Treasurer: 'rose',
-  'Technical Head': 'blue',
-  'Events Head': 'purple',
-  'Creative Head': 'purple',
-  'Public Relations Head': 'cyan',
-  'Marketing Head': 'cyan',
-  'Design Head': 'purple',
-  'Content Head': 'blue',
-  'Operations Head': 'rose',
-  'Community Head': 'cyan',
-  'Sponsorship Head': 'amber',
-};
-
-function getTagColor(role, category) {
-  if (category === 'Junior Core') return 'cyan';
-  return ROLE_COLOR_MAP[role] || 'blue';
-}
-
-/* ──────────────────────────────────────────────
-   Sub-components
-   ────────────────────────────────────────────── */
-
-/** Hero title with word-by-word reveal */
-function HeroTitle({ text, observe }) {
-  const words = text.split(' ');
-  return (
-    <h1 className="team-hero-title" ref={observe}>
-      {words.map((word, i) => (
-        <span className="word" key={i}>
-          <span
-            className="word-inner"
-            style={{ transitionDelay: `${0.08 + i * 0.06}s` }}
-          >
-            {word}
-          </span>
-          {i < words.length - 1 && '\u00A0'}
-        </span>
-      ))}
-    </h1>
-  );
-}
-
-/** Section heading (label + title + optional description) */
-function SectionHeader({ label, title, description, observe }) {
-  return (
-    <div className="team-section-header">
-      <p className="team-section-label" ref={observe}>
-        {label}
-      </p>
-      <div>
-        <h2 className="team-section-title" ref={observe}>
-          {title}
-        </h2>
-        {description && (
-          <p className="team-section-desc" ref={observe}>
-            {description}
-          </p>
-        )}
-      </div>
-    </div>
-  );
-}
-
-/** Advisory card for HOD & Faculty Incharge */
-function AdvisoryCard({ person, observe }) {
-  return (
-    <div className="team-advisory-card" ref={observe}>
-      <div className="team-advisory-portrait">
-        <img src={person.image} alt={person.name} loading="lazy" />
-      </div>
-      <h3 className="team-advisory-name">{person.name}</h3>
-      <p className="team-advisory-designation">{person.designation}</p>
-      {person.message && (
-        <p className="team-advisory-message">{person.message}</p>
-      )}
-      {(person.linkedin || person.email) && (
-        <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
-          {person.linkedin && (
-            <a
-              href={person.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              className="team-item-link"
-              aria-label={`${person.name} LinkedIn`}
-            >
-              <Linkedin />
-            </a>
-          )}
-          {person.email && (
-            <a
-              href={`mailto:${person.email}`}
-              className="team-item-link"
-              aria-label={`Email ${person.name}`}
-            >
-              <Mail />
-            </a>
-          )}
-        </div>
-      )}
-    </div>
-  );
-}
-
-/** Single team list item row */
-function TeamListItem({ member, observe }) {
-  const color = getTagColor(member.role, member.category);
-
-  return (
-    <li className="team-list-item" ref={observe}>
-      <div className="team-list-item-inner">
-        {/* Left: tags + name + bio + links */}
-        <div className="team-item-content">
-          <div className="team-item-tags">
-            <span className={`team-tag team-tag--${color}`}>
-              {member.role}
-            </span>
-            {member.category && (
-              <span className="team-tag team-tag--filled">
-                {member.category}
-              </span>
-            )}
-          </div>
-
-          <p className="team-item-name">{member.name}</p>
-
-          {member.bio && <p className="team-item-bio">{member.bio}</p>}
-
-          <div className="team-item-links">
-            {member.linkedin && (
-              <a
-                href={member.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                className="team-item-link"
-                aria-label={`${member.name} LinkedIn`}
-              >
-                <Linkedin />
-              </a>
-            )}
-            {member.github && (
-              <a
-                href={member.github}
-                target="_blank"
-                rel="noreferrer"
-                className="team-item-link"
-                aria-label={`${member.name} GitHub`}
-              >
-                <Github />
-              </a>
-            )}
-            {member.email && (
-              <a
-                href={`mailto:${member.email}`}
-                className="team-item-link"
-                aria-label={`Email ${member.name}`}
-              >
-                <Mail />
-              </a>
-            )}
-          </div>
-        </div>
-
-        {/* Right: portrait */}
-        <div className="team-item-portrait">
-          <img src={member.image} alt={member.name} loading="lazy" />
-        </div>
-      </div>
-
-      {/* Bottom separator */}
-      <div className="team-separator" />
-    </li>
-  );
-}
-
-/* ──────────────────────────────────────────────
-   Main Page
-   ────────────────────────────────────────────── */
 export default function Team() {
-  const observe = useScrollReveal();
+  const [currentFacultyIndex, setCurrentFacultyIndex] = useState(0);
 
-  const totalMembers = coreTeam.length + juniorCoreTeam.length;
+  const nextFaculty = () => {
+    setCurrentFacultyIndex((prev) =>
+      prev === foundationTeam.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevFaculty = () => {
+    setCurrentFacultyIndex((prev) =>
+      prev === 0 ? foundationTeam.length - 1 : prev - 1
+    );
+  };
 
   return (
-    <div className="pt-20 pb-12 relative z-10">
-      <div className="max-w-5xl mx-auto px-5 sm:px-8">
-        {/* ─── Hero ─── */}
-        <section className="team-hero">
-          <p className="team-hero-label" ref={observe}>
-            Our People
-          </p>
+    <div className="team-page">
+      <div className="team-page-inner">
+        <TeamHero />
 
-          <HeroTitle
-            text="Meet the minds behind S4DS"
-            observe={observe}
-          />
+        {/* =========================================
+            FACULTY / HOD
+            SLIDER FORMAT
+            ========================================= */}
 
-          <p className="team-hero-desc" ref={observe}>
-            The organising committee powering innovation, events, and
-            community across data science at TCET — dedicated people
-            who turn ideas into impact.
-          </p>
-        </section>
+        <section
+          className="team-roster team-roster--foundation relative"
+          aria-labelledby="team-foundation-heading"
+        >
+          <div className="relative w-full max-w-5xl mx-auto px-12 sm:px-16">
+            <div className="overflow-hidden min-h-[400px]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentFacultyIndex}
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                >
+                  <TeamMemberEditorial
+                    member={foundationTeam[currentFacultyIndex]}
+                    index={currentFacultyIndex}
+                    period={FOUNDATION_PERIOD}
+                    showBio={false}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-        {/* ─── Advisory Board ─── */}
-        <section>
-          <SectionHeader
-            label="Advisory"
-            title="Faculty Mentors"
-            description="Institutional oversight guiding the committee's vision and mission."
-            observe={observe}
-          />
-          <div className="team-advisory-grid">
-            <AdvisoryCard person={hodData} observe={observe} />
-            <AdvisoryCard person={facultyInchargeData} observe={observe} />
+            {/* Slider Controls */}
+            <button
+              onClick={prevFaculty}
+              className="absolute left-0 sm:left-4 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-[#0D1730] border border-[#2E8FFF]/30 text-[#4FA8F5] hover:bg-[#1E3A6E] hover:border-[#2E8FFF] transition-all z-10 shadow-[0_0_10px_rgba(46,143,255,0.2)]"
+              aria-label="Previous faculty"
+            >
+              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
+            <button
+              onClick={nextFaculty}
+              className="absolute right-0 sm:right-4 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-[#0D1730] border border-[#2E8FFF]/30 text-[#4FA8F5] hover:bg-[#1E3A6E] hover:border-[#2E8FFF] transition-all z-10 shadow-[0_0_10px_rgba(46,143,255,0.2)]"
+              aria-label="Next faculty"
+            >
+              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
+
+            {/* Pagination Dots */}
+            <div className="flex justify-center gap-3 mt-8">
+              {foundationTeam.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentFacultyIndex(i)}
+                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                    i === currentFacultyIndex
+                      ? "bg-[#2E8FFF] w-6 shadow-[0_0_8px_rgba(46,143,255,0.6)]"
+                      : "bg-[#8CA0C4]/30 hover:bg-[#8CA0C4]/60"
+                  }`}
+                  aria-label={`Go to slide ${i + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* ─── Core Team ─── */}
-        <section>
-          <SectionHeader
-            label="Core Team"
-            title="Those who make it happen"
-            description="Leadership and department heads driving every initiative forward."
-            observe={observe}
-          />
+        {/* =========================================
+            CURRENT 2025–26 TEAM
+            EDITORIAL DESIGN
+            ========================================= */}
 
-          <div className="team-list-top-separator" ref={observe} />
-          <ul className="team-list">
-            {coreTeam.map((member) => (
-              <TeamListItem
+        <section
+          className="team-roster team-roster--current"
+          aria-labelledby="team-current-heading"
+        >
+          <div className="flex flex-col items-center justify-center text-center pt-24 pb-12 px-4">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#2E8FFF]/10 border border-[#2E8FFF]/30 text-[#2E8FFF] font-mono text-xs tracking-[0.2em] uppercase mb-6 shadow-[0_0_10px_rgba(46,143,255,0.1)]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2E8FFF] animate-ping"></span>
+              {CURRENT_PERIOD} ACTIVE ROSTER
+            </div>
+
+            <h2 id="team-current-heading" className="text-4xl sm:text-5xl md:text-6xl font-black text-[#F5F7FF] tracking-tight uppercase drop-shadow-[0_0_15px_rgba(46,143,255,0.2)] mb-4">
+              The Current Team
+            </h2>
+            
+            <p className="text-[#8CA0C4] font-mono text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+              Executive board and department heads driving every initiative
+              forward this year.
+            </p>
+          </div>
+
+          <div className="team-roster-main">
+            {coreTeam.map((member, i) => (
+              <TeamMemberEditorial
                 key={member.id}
                 member={member}
-                observe={observe}
+                index={i}
+                period={CURRENT_PERIOD}
+                variant="editorial"
               />
             ))}
-          </ul>
+          </div>
         </section>
-
-        {/* ─── Junior Core ─── */}
-        <section style={{ marginTop: '2rem' }}>
-          <SectionHeader
-            label="Junior Core"
-            title="The next wave"
-            description="Rising talent learning the ropes and scaling operations."
-            observe={observe}
-          />
-
-          <div className="team-list-top-separator" ref={observe} />
-          <ul className="team-list">
-            {juniorCoreTeam.map((member) => (
-              <TeamListItem
-                key={member.id}
-                member={member}
-                observe={observe}
-              />
-            ))}
-          </ul>
-        </section>
-
-        {/* ─── Footer ─── */}
-        <div className="team-footer" ref={observe}>
-          <p className="team-footer-text">
-            {totalMembers} members · S4DS TCET · 2025–26
-          </p>
-        </div>
       </div>
     </div>
   );

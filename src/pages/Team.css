@@ -1,0 +1,311 @@
+/* =====================================================
+   MEMBER SYSTEM (DARK SCI-FI REDESIGN)
+   ===================================================== */
+
+.team-page {
+  background-color: #060B18; /* Almost-black navy */
+  background-image: 
+    linear-gradient(rgba(30, 58, 110, 0.1) 1px, transparent 1px), 
+    linear-gradient(90deg, rgba(30, 58, 110, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+  color: #F5F7FF; /* Near-white */
+  min-height: 100vh;
+}
+
+.team-page-inner {
+  background-color: transparent;
+}
+
+/* -----------------------------------------------------
+   PORTRAIT
+   ----------------------------------------------------- */
+
+.team-member-portrait {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  max-width: 320px;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: rgba(13, 23, 48, 0.6);
+  margin: 0 auto;
+}
+
+.team-member-portrait-clip,
+.team-member-portrait-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.team-member-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* -----------------------------------------------------
+   ORIGINAL FACULTY / HOD
+   ----------------------------------------------------- */
+
+.team-member {
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.95fr)
+    minmax(0, 1.05fr);
+
+  align-items: center;
+
+  width: 100%;
+
+  padding: 3rem 0;
+  border-bottom: 1px solid rgba(46, 143, 255, 0.2);
+  gap: 2rem;
+
+  overflow: hidden;
+
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease;
+}
+
+/* Keep original content visible */
+
+.team-member-content {
+  padding: 0;
+}
+
+.team-member-period,
+.team-member-dept,
+.team-member-bio,
+.team-member-links {
+  display: block;
+}
+
+/* -----------------------------------------------------
+   CURRENT TEAM — EDITORIAL
+   ----------------------------------------------------- */
+
+.team-member--editorial {
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns: 40% 20% 40%;
+
+  align-items: center;
+
+  width: 100%;
+
+  min-height: 5.6rem;
+  padding: 0;
+  border-bottom: 1px solid rgba(46, 143, 255, 0.2);
+  gap: 0;
+
+  overflow: visible;
+
+  background: transparent;
+
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease;
+}
+
+/* Editorial metadata */
+
+.team-member--editorial .team-member-meta {
+  grid-column: 1;
+  justify-content: flex-start;
+  text-align: left;
+
+  display: flex;
+
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  padding-left: 0.25rem;
+
+  gap: 0.5rem;
+}
+
+.team-member--editorial .team-member-tags {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.team-member--editorial .team-member-tag {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid rgba(46, 143, 255, 0.3);
+  border-radius: 9999px;
+  font-size: 0.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #2E8FFF;
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-origin: left center;
+}
+
+.team-member--editorial:hover .team-member-tag {
+  background-color: rgba(46, 143, 255, 0.1);
+  border-color: rgba(46, 143, 255, 0.5);
+  color: #2E8FFF;
+  box-shadow: 0 0 12px rgba(46, 143, 255, 0.4);
+  transform: scale(1.2);
+}
+
+/* Editorial name */
+
+.team-member--editorial .team-member-name-wrap {
+  grid-column: 3;
+  display: flex;
+  justify-content: flex-end;
+  text-align: right;
+
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  min-width: 0;
+
+  overflow: visible;
+}
+
+.team-member--editorial .team-member-name {
+  grid-column: auto;
+  width: 100%;
+  margin: 0;
+  padding: 0 1.25rem 0 0;
+  font-size: clamp(2rem, 3.35vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+  color: #F5F7FF;
+  white-space: normal;
+  overflow: visible;
+  transition:
+    color 0.35s ease,
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.team-member--editorial:hover {
+  background: rgba(13, 23, 48, 0.8);
+  box-shadow: inset 0 0 20px rgba(46, 143, 255, 0.05);
+}
+
+.team-member--editorial:hover .team-member-name {
+  transform: translateX(-0.35rem);
+}
+
+/* Editorial index */
+
+.team-member--editorial .team-member-index {
+  display: none;
+}
+
+/* -----------------------------------------------------
+   DESKTOP
+   ----------------------------------------------------- */
+
+@media (min-width: 768px) {
+  .team-roster--foundation .team-roster-main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+  }
+
+  .team-roster--foundation .team-member {
+    grid-template-columns: 1fr;
+    border-bottom: none;
+    padding: 0;
+    gap: 1.5rem;
+  }
+
+  .team-member--editorial {
+    grid-template-columns: 45% 10% 45%;
+    min-height: 5.6rem;
+  }
+
+  .team-member {
+    grid-template-columns:
+      minmax(0, 0.95fr)
+      minmax(0, 1.05fr);
+  }
+}
+
+/* -----------------------------------------------------
+   MOBILE
+   ----------------------------------------------------- */
+
+@media (max-width: 767px) {
+  /* Faculty / HOD remains portrait based */
+
+  .team-member {
+    grid-template-columns: 1fr;
+
+    padding: 2.5rem 0;
+
+    gap: 1.25rem;
+  }
+
+  /* Current team */
+
+  .team-member--editorial {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 1.5rem 0;
+    gap: 1rem;
+  }
+
+  .team-member--editorial .team-member-meta {
+    padding-left: 0.15rem;
+
+    gap: 0.25rem;
+  }
+
+  .team-member--editorial .team-member-tag {
+    padding: 0.16rem 0.35rem;
+
+    font-size: 0.45rem;
+  }
+
+  .team-member--editorial .team-member-name {
+    padding-right: 0;
+    font-size: clamp(1.6rem, 7vw, 2.4rem);
+    letter-spacing: -0.04em;
+    white-space: normal;
+  }
+
+  .team-member--editorial:hover .team-member-name {
+    transform: translateX(-0.15rem);
+  }
+}
+
+/* -----------------------------------------------------
+   REDUCED MOTION
+   ----------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .team-member,
+  .team-member--editorial .team-member-name {
+    transition: none;
+  }
+
+  .team-member--editorial:hover .team-member-name {
+    transform: none;
+  }
+}

@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Linkedin, Github, Mail } from 'lucide-react';
+import React from "react";
+import { motion } from "framer-motion";
+import { Linkedin, Github, Mail } from "lucide-react";
 
 export default function TeamCard({ member, delay = 0 }) {
   return (
@@ -60,7 +60,7 @@ export default function TeamCard({ member, delay = 0 }) {
                 title={member.email}
               >
                 <Mail className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Contact</span>
+                <span className="hidden ">Contact</span>
               </a>
             )}
             {member.github && (
