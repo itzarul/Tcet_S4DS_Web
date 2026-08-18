@@ -361,9 +361,7 @@ export default function BenefitsOpportunities() {
     DATA / NETWORK / BUILD
   </div>
 
-  <div className="absolute bottom-28 left-10 font-mono text-[9px] tracking-[0.3em] text-cyan-300 opacity-[0.10]">
-    S4DS_SYSTEM_01
-  </div>
+  
 
 </div>
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 relative z-10">
@@ -472,10 +470,6 @@ export default function BenefitsOpportunities() {
 
         </div>
 
-        <div className="flex justify-between mt-10 pt-5 border-t border-zinc-900 font-mono text-[10px] text-zinc-600 tracking-wider">
-          <span>S4DS / TCET / MUMBAI</span>
-          <span>BUILD YOUR NEXT →</span>
-        </div>
 
       </div>
     </section>
