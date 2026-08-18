@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
 import Hero from '../components/Hero';
 import About from '../components/About';
+import BenefitsOpportunities from '../components/BenefitsOpportunities';
 import EventCard from '../components/EventCard';
 import PublicationCard from '../components/PublicationCard';
 import TeamCard from '../components/TeamCard';
@@ -81,54 +82,8 @@ export default function Home() {
       {/* 2. About S4DS */}
       <About />
 
-      {/* 3. Why Join S4DS */}
-      <section className="py-20 relative z-10 bg-zinc-950/40 border-y border-zinc-800/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono mb-4"
-            >
-              <span>BENEFITS & OPPORTUNITIES</span>
-            </motion.div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-              Why Join <span className="text-gradient-primary">S4DS TCET?</span>
-            </h2>
-            <p className="mt-4 text-zinc-400 text-base sm:text-lg">
-              Empowering students to step into high-growth tech roles with practical experience and leadership confidence.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {whyJoinCards.map((item, index) => {
-              const IconComponent = item.icon;
-              return (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.08 }}
-                  whileHover={{ y: -6 }}
-                  className="p-8 rounded-3xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-xl hover:border-blue-500/40 transition-all shadow-xl group"
-                >
-                  <div className={`w-12 h-12 rounded-2xl border flex items-center justify-center mb-6 shadow-inner ${item.color}`}>
-                    <IconComponent className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-zinc-400 text-sm leading-relaxed">
-                    {item.description}
-                  </p>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      {/* 3. Benefits & Opportunities */}
+<BenefitsOpportunities />
 
       {/* 4. Featured Events Preview */}
       <section className="py-24 relative z-10">

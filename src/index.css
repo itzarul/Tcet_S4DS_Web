@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600&family=IBM+Plex+Mono:wght@400&family=Inter:wght@300&display=swap');
 @import "tailwindcss";
 
 @layer base {
@@ -7,13 +8,32 @@
     --color-card-border: rgba(39, 39, 42, 0.8);
     --color-primary: #3B82F6;
     --color-accent: #06B6D4;
+     --color-text: #FAFAFA;
+  --color-muted: #A1A1AA;
+  --color-line: #27272A;
+  --color-line-hover: #52525B;
   }
 
   body {
-    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: var(--color-bg);
-    color: #FAFAFA;
-  }
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 300;
+  background-color: var(--color-bg);
+  color: #FAFAFA;
+}
+.font-display {
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 600;
+}
+
+.font-mono {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 400;
+}
+
+.font-body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+}
 }
 
 /* Custom Scrollbar */
@@ -27,11 +47,11 @@
 
 ::-webkit-scrollbar-thumb {
   background: #27272A;
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3B82F6;
+  background: #06B6D4;
 }
 
 /* Utilities & Glassmorphism */
