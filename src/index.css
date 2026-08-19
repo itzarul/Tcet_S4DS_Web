@@ -1,16 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600&family=IBM+Plex+Mono:wght@400&family=Inter:wght@300;400&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --color-bgblack: #010101;
+  --color-primary: #065cc8;
+  --color-secondary: #6dccec;
+  --color-accent: #c0efff;
+  --color-surface: #05103a;
+
+  /* Custom Fonts mapped for Tailwind v4 */
+  --font-chakra: "Chakra Petch", sans-serif;
+  --font-plex: "IBM Plex Mono", monospace;
+  --font-inter: "Inter", sans-serif;
+
+  /* Overrides for default sans and mono */
+  --font-mono: "IBM Plex Mono", monospace;
+  --font-sans: "Inter", sans-serif;
+}
 
 @layer base {
   :root {
     --color-bg: #09090B;
     --color-card: #18181B;
     --color-card-border: rgba(39, 39, 42, 0.8);
-    --color-primary: #3B82F6;
-    --color-accent: #06B6D4;
   }
 
   body {
-    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* Set default body font to Inter */
+    font-family: var(--font-inter);
     background-color: var(--color-bg);
     color: #FAFAFA;
   }
@@ -83,9 +100,9 @@
 /* Grid & Noise Backgrounds */
 .bg-grid-pattern {
   background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-image:
+          linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
 .bg-dots-pattern {
