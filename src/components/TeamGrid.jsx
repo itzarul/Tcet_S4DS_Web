@@ -16,35 +16,35 @@ export default function TeamGrid({ coreMembers, juniorMembers }) {
     : juniorMembers;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 font-subheading">
       {/* Category Filter Pills */}
-      <div className="flex flex-wrap items-center justify-center gap-3">
+      <div className="flex flex-wrap items-center justify-center gap-4">
         <button
           onClick={() => setFilter('all')}
-          className={`px-5 py-2 rounded-full text-xs font-mono font-semibold transition-all cursor-pointer ${
+          className={`px-5 py-2 text-xs font-subheading tracking-wider uppercase transition-all cursor-pointer border-2 ${
             filter === 'all'
-              ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
-              : 'bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white'
+              ? 'bg-blue-600 border-blue-300 text-white shadow-[3px_3px_0px_0px_#000]'
+              : 'bg-[#0A132C] border-blue-600 text-sky-300 hover:bg-blue-900/80 hover:text-white shadow-[3px_3px_0px_0px_#1d4ed8]'
           }`}
         >
           All Members ({allMembers.length})
         </button>
         <button
           onClick={() => setFilter('core')}
-          className={`px-5 py-2 rounded-full text-xs font-mono font-semibold transition-all cursor-pointer ${
+          className={`px-5 py-2 text-xs font-subheading tracking-wider uppercase transition-all cursor-pointer border-2 ${
             filter === 'core'
-              ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
-              : 'bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white'
+              ? 'bg-blue-600 border-blue-300 text-white shadow-[3px_3px_0px_0px_#000]'
+              : 'bg-[#0A132C] border-blue-600 text-sky-300 hover:bg-blue-900/80 hover:text-white shadow-[3px_3px_0px_0px_#1d4ed8]'
           }`}
         >
           Core Team ({coreMembers.length})
         </button>
         <button
           onClick={() => setFilter('junior')}
-          className={`px-5 py-2 rounded-full text-xs font-mono font-semibold transition-all cursor-pointer ${
+          className={`px-5 py-2 text-xs font-subheading tracking-wider uppercase transition-all cursor-pointer border-2 ${
             filter === 'junior'
-              ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
-              : 'bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white'
+              ? 'bg-blue-600 border-blue-300 text-white shadow-[3px_3px_0px_0px_#000]'
+              : 'bg-[#0A132C] border-blue-600 text-sky-300 hover:bg-blue-900/80 hover:text-white shadow-[3px_3px_0px_0px_#1d4ed8]'
           }`}
         >
           Junior Core ({juniorMembers.length})
