@@ -77,9 +77,13 @@ export default function Team() {
 
   return (
     <div className="min-h-screen bg-[#030712] text-slate-100 pt-24 pb-24 px-4 sm:px-6 lg:px-8 font-body font-light selection:bg-blue-600 selection:text-white relative overflow-hidden">
-      {/* Background Heavy Brutalist Grid & Hazard Overlay */}
-      <div className="fixed inset-0 bg-grid-pattern opacity-30 pointer-events-none z-0" />
-      <div className="fixed inset-0 bg-[radial-gradient(#1d4ed8_1px,transparent_1px)] [background-size:24px_24px] opacity-20 pointer-events-none z-0" />
+      {/* Background Heavy Terminal Grid, CRT Scanlines & Laser Beam */}
+      <div className="fixed inset-0 bg-cyber-grid opacity-60 pointer-events-none z-0" />
+      <div className="fixed inset-0 bg-cyber-grid-dense opacity-40 pointer-events-none z-0" />
+      <div className="fixed inset-0 bg-[radial-gradient(#2563eb_1.5px,transparent_1.5px)] [background-size:32px_32px] opacity-25 pointer-events-none z-0" />
+      <div className="crt-scanlines fixed inset-0 opacity-45 pointer-events-none z-30" />
+      <div className="animate-crt-beam pointer-events-none" />
+      <div className="crt-vignette fixed inset-0 z-30 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         
@@ -189,6 +193,7 @@ export default function Team() {
                         alt={member.name}
                         className="w-full h-full object-cover filter contrast-110 group-hover:scale-105 transition-transform duration-300"
                       />
+                      <div className="crt-scanlines absolute inset-0 opacity-30 pointer-events-none" />
                     </div>
 
                     {/* Member Details */}
@@ -285,6 +290,7 @@ export default function Team() {
                         className="w-full h-full object-cover filter contrast-110 group-hover:scale-105 transition-transform duration-300"
                         loading="lazy"
                       />
+                      <div className="crt-scanlines absolute inset-0 opacity-30 pointer-events-none z-0" />
                       <div className="absolute top-2 left-2 z-10">
                         <span className="px-2.5 py-1 text-[11px] font-subheading bg-blue-600 border border-white text-white shadow-[2px_2px_0px_0px_#000] uppercase tracking-wide">
                           {member.role}

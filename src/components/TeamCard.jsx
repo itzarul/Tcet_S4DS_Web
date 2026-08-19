@@ -33,6 +33,7 @@ export default function TeamCard({ member, delay = 0 }) {
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#040814] via-[#040814]/20 to-transparent opacity-80" />
+        <div className="crt-scanlines absolute inset-0 opacity-30 pointer-events-none" />
 
         {/* Role Badge Box */}
         <div className="absolute top-3 left-3 z-10">
