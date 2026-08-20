@@ -35,9 +35,9 @@ export default function TeamCard({ member, delay = 0 }) {
         <div className="absolute inset-0 bg-gradient-to-t from-[#010101] via-[#010101]/20 to-transparent opacity-80" />
         <div className="crt-scanlines absolute inset-0 opacity-30 pointer-events-none" />
 
-        {/* Role Badge Box */}
-        <div className="absolute top-3 left-3 z-10">
-          <span className="px-3 py-1 text-[11px] font-subheading bg-[#065cc8] border border-[#c0efff] text-white shadow-[2px_2px_0px_0px_#000] uppercase tracking-wide">
+        {/* Position Tag Box */}
+        <div className="absolute bottom-2 right-2 z-10">
+          <span className="px-2.5 py-1 text-[11px] font-subheading bg-[#065cc8] border border-[#c0efff] text-white shadow-[2px_2px_0px_0px_#000] uppercase tracking-wide">
             {member.role}
           </span>
         </div>
@@ -49,9 +49,6 @@ export default function TeamCard({ member, delay = 0 }) {
           <h3 className="text-lg font-heading font-semibold text-white group-hover:text-[#6dccec] transition-colors uppercase tracking-wide">
             {member.name}
           </h3>
-          <p className="text-xs text-[#6dccec] font-subheading mt-0.5">
-            {member.category || "Core Leadership"}
-          </p>
 
           {member.bio && (
             <p className="text-[#c0efff]/80 text-xs mt-3 font-body font-light leading-relaxed line-clamp-3">

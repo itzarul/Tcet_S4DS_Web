@@ -291,14 +291,9 @@ export default function Team() {
                         loading="lazy"
                       />
                       <div className="crt-scanlines absolute inset-0 opacity-30 pointer-events-none z-0" />
-                      <div className="absolute top-2 left-2 z-10">
+                      <div className="absolute bottom-2 right-2 z-10">
                         <span className="px-2.5 py-1 text-[11px] font-subheading bg-[#065cc8] border border-[#c0efff] text-white shadow-[2px_2px_0px_0px_#000] uppercase tracking-wide">
                           {member.role}
-                        </span>
-                      </div>
-                      <div className="absolute bottom-2 right-2 z-10">
-                        <span className="px-2 py-0.5 text-[10px] font-subheading bg-[#010101] border border-[#6dccec] text-[#6dccec]">
-                          {member.codeName}
                         </span>
                       </div>
                     </div>
@@ -307,10 +302,6 @@ export default function Team() {
                     <h3 className="text-xl font-heading font-semibold text-white group-hover:text-[#6dccec] transition-colors uppercase tracking-wide">
                       {member.name}
                     </h3>
-                    
-                    <p className="text-xs font-subheading text-[#6dccec] uppercase mt-0.5">
-                      {member.category} COMMAND
-                    </p>
 
                     {member.bio && (
                       <p className="text-[#c0efff]/90 text-xs mt-3 font-body font-light leading-relaxed line-clamp-3 bg-[#010101] p-2.5 border border-[#065cc8] shadow-[2px_2px_0px_0px_#065cc8]">
