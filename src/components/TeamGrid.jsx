@@ -23,8 +23,8 @@ export default function TeamGrid({ coreMembers, juniorMembers }) {
           onClick={() => setFilter('all')}
           className={`px-5 py-2 text-xs font-subheading tracking-wider uppercase transition-all cursor-pointer border-2 ${
             filter === 'all'
-              ? 'bg-blue-600 border-blue-300 text-white shadow-[3px_3px_0px_0px_#000]'
-              : 'bg-[#0A132C] border-blue-600 text-sky-300 hover:bg-blue-900/80 hover:text-white shadow-[3px_3px_0px_0px_#1d4ed8]'
+              ? 'bg-[#065cc8] border-[#c0efff] text-white shadow-[3px_3px_0px_0px_#000]'
+              : 'bg-[#05103a] border-[#065cc8] text-[#6dccec] hover:bg-[#065cc8] hover:text-white shadow-[3px_3px_0px_0px_#065cc8]'
           }`}
         >
           All Members ({allMembers.length})
@@ -33,8 +33,8 @@ export default function TeamGrid({ coreMembers, juniorMembers }) {
           onClick={() => setFilter('core')}
           className={`px-5 py-2 text-xs font-subheading tracking-wider uppercase transition-all cursor-pointer border-2 ${
             filter === 'core'
-              ? 'bg-blue-600 border-blue-300 text-white shadow-[3px_3px_0px_0px_#000]'
-              : 'bg-[#0A132C] border-blue-600 text-sky-300 hover:bg-blue-900/80 hover:text-white shadow-[3px_3px_0px_0px_#1d4ed8]'
+              ? 'bg-[#065cc8] border-[#c0efff] text-white shadow-[3px_3px_0px_0px_#000]'
+              : 'bg-[#05103a] border-[#065cc8] text-[#6dccec] hover:bg-[#065cc8] hover:text-white shadow-[3px_3px_0px_0px_#065cc8]'
           }`}
         >
           Core Team ({coreMembers.length})
@@ -43,8 +43,8 @@ export default function TeamGrid({ coreMembers, juniorMembers }) {
           onClick={() => setFilter('junior')}
           className={`px-5 py-2 text-xs font-subheading tracking-wider uppercase transition-all cursor-pointer border-2 ${
             filter === 'junior'
-              ? 'bg-blue-600 border-blue-300 text-white shadow-[3px_3px_0px_0px_#000]'
-              : 'bg-[#0A132C] border-blue-600 text-sky-300 hover:bg-blue-900/80 hover:text-white shadow-[3px_3px_0px_0px_#1d4ed8]'
+              ? 'bg-[#065cc8] border-[#c0efff] text-white shadow-[3px_3px_0px_0px_#000]'
+              : 'bg-[#05103a] border-[#065cc8] text-[#6dccec] hover:bg-[#065cc8] hover:text-white shadow-[3px_3px_0px_0px_#065cc8]'
           }`}
         >
           Junior Core ({juniorMembers.length})
