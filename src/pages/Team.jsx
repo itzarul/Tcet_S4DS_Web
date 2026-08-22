@@ -574,7 +574,7 @@ export default function Team() {
                   <img
                     src={selectedNode.image}
                     alt={selectedNode.name}
-                    className="w-full h-full object-cover filter contrast-110"
+                    className="w-full h-full object-cover"
                   />
                 </motion.div>
 
