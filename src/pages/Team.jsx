@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence, useMotionValue, useTransform, animate } from 'framer-motion';
 import { hodData, facultyInchargeData, coreTeam } from '../data/team';
 import { Linkedin, Github, Mail, Search, X, Terminal, Cpu, Shield, Award, Sparkles } from 'lucide-react';
 
@@ -12,6 +12,51 @@ function CornerBrackets({ className = "border-[#6dccec]", size = "w-3.5 h-3.5" }
       <span className={`absolute -bottom-1 -right-1 border-b-4 border-r-4 ${className} ${size}`} />
     </>
   );
+}
+
+/* ---------------- Motion variants ---------------- */
+const EASE = [0.22, 1, 0.36, 1];
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } },
+};
+
+const slideInLeft = {
+  hidden: { opacity: 0, x: -28 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: EASE } },
+};
+
+const slideInRight = {
+  hidden: { opacity: 0, x: 28 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: EASE } },
+};
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.85 },
+  show: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: EASE } },
+};
+
+/* Masked line reveal for headings */
+const maskedLine = {
+  hidden: { y: '110%' },
+  show: { y: 0, transition: { duration: 0.6, ease: EASE } },
+};
+
+/* ---------------- Animated count-up stat ---------------- */
+function AnimatedCounter({ to }) {
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (v) => Math.round(v));
+  useEffect(() => {
+    const controls = animate(count, to, { duration: 1.4, ease: 'easeOut' });
+    return () => controls.stop();
+  }, [to]);
+  return <motion.span>{rounded}</motion.span>;
 }
 
 export default function Team() {
@@ -61,6 +106,8 @@ export default function Team() {
     status: "ACTIVE"
   }));
 
+  const totalNodes = facultyMembers.length + executiveCoreMembers.length;
+
   // Search filter helper function
   const matchesSearch = (item) => {
     if (!searchQuery) return true;
@@ -88,22 +135,39 @@ export default function Team() {
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Top Industrial Header Bar */}
-        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-4 bg-[#05103a] border-4 border-[#065cc8] shadow-[6px_6px_0px_0px_#065cc8] mb-14">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          animate="show"
+          className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-4 bg-[#05103a] border-4 border-[#065cc8] shadow-[6px_6px_0px_0px_#065cc8] mb-14"
+        >
           <div className="flex flex-wrap items-center gap-3">
-            <span className="flex items-center gap-2 text-[#6dccec] font-subheading text-xs bg-[#010101] px-3.5 py-2 border-2 border-[#065cc8] shadow-[2px_2px_0px_0px_#000]">
+            <motion.span
+              variants={slideInLeft}
+              className="flex items-center gap-2 text-[#6dccec] font-subheading text-xs bg-[#010101] px-3.5 py-2 border-2 border-[#065cc8] shadow-[2px_2px_0px_0px_#000]"
+            >
               <span className="w-2.5 h-2.5 bg-[#065cc8] animate-ping rounded-full" />
               &gt; SYS.LOC: S4DS.TCET
-            </span>
-            <span className="bg-[#010101] px-3 py-2 border-2 border-[#05103a] text-[#6dccec] font-subheading text-xs shadow-[2px_2px_0px_0px_#000] hidden sm:inline-block">
+            </motion.span>
+            <motion.span
+              variants={fadeUp}
+              className="bg-[#010101] px-3 py-2 border-2 border-[#05103a] text-[#6dccec] font-subheading text-xs shadow-[2px_2px_0px_0px_#000] hidden sm:inline-block"
+            >
               [ PROTOCOL // HARSH_BRUTALIST ]
-            </span>
-            <span className="bg-[#065cc8] text-white px-3 py-2 border-2 border-[#c0efff] font-subheading text-xs shadow-[2px_2px_0px_0px_#000]">
-              LIVE NODES: {facultyMembers.length + executiveCoreMembers.length}
-            </span>
+            </motion.span>
+            <motion.span
+              variants={scaleIn}
+              className="bg-[#065cc8] text-white px-3 py-2 border-2 border-[#c0efff] font-subheading text-xs shadow-[2px_2px_0px_0px_#000]"
+            >
+              LIVE NODES: <AnimatedCounter to={totalNodes} />
+            </motion.span>
           </div>
 
           {/* Harsh Cyber Search Bar */}
-          <div className="relative w-full md:w-80">
+          <motion.div
+            variants={slideInRight}
+            className="relative w-full md:w-80"
+          >
             <Search className="w-4 h-4 text-[#6dccec] absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
@@ -120,36 +184,56 @@ export default function Team() {
                 <X className="w-4 h-4" />
               </button>
             )}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Harsh Hero Banner */}
         <div className="text-center mb-20">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
+            variants={scaleIn}
+            initial="hidden"
+            animate="show"
             className="inline-block px-5 py-2 border-4 border-[#065cc8] bg-[#05103a] text-[#6dccec] font-subheading text-xs sm:text-sm tracking-widest uppercase mb-6 shadow-[6px_6px_0px_0px_#065cc8]"
           >
             ▪ HARSH_SYS // COMMAND_DIRECTIVE ▪
           </motion.div>
 
+          {/* Masked line-by-line heading reveal */}
           <motion.h1
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            variants={staggerContainer}
+            initial="hidden"
+            animate="show"
             className="text-5xl sm:text-7xl md:text-8xl font-heading font-semibold text-white tracking-tight uppercase mb-4 drop-shadow-[0_6px_35px_rgba(6,92,200,0.7)]"
           >
-            ORGANISING COMMITTEE<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6dccec] via-[#065cc8] to-[#c0efff]">2025-26</span>
+            <span className="block overflow-hidden pb-1">
+              <motion.span variants={maskedLine} className="block">
+                ORGANISING COMMITTEE
+              </motion.span>
+            </span>
+            <span className="block overflow-hidden pb-1">
+              <motion.span
+                variants={maskedLine}
+                className="block text-transparent bg-clip-text bg-gradient-to-r from-[#6dccec] via-[#065cc8] to-[#c0efff]"
+              >
+                2025-26
+              </motion.span>
+            </span>
           </motion.h1>
 
           {/* Industrial Hazard Stripe Divider */}
-          <div className="w-full h-3 bg-[repeating-linear-gradient(45deg,#065cc8,#065cc8_12px,#010101_12px,#010101_24px)] border-y-2 border-[#6dccec] max-w-3xl mx-auto my-6 shadow-[3px_3px_0px_0px_#065cc8]" />
+          <motion.div
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: 1 }}
+            transition={{ duration: 0.7, ease: EASE, delay: 0.35 }}
+            style={{ originX: 0.5 }}
+            className="w-full h-3 bg-[repeating-linear-gradient(45deg,#065cc8,#065cc8_12px,#010101_12px,#010101_24px)] border-y-2 border-[#6dccec] max-w-3xl mx-auto my-6 shadow-[3px_3px_0px_0px_#065cc8]"
+          />
 
           <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            transition={{ delay: 0.45 }}
             className="font-body font-light text-xs sm:text-sm text-[#c0efff] max-w-3xl mx-auto uppercase tracking-wider leading-relaxed bg-[#05103a] p-4 border-4 border-[#065cc8] shadow-[6px_6px_0px_0px_#065cc8]"
           >
             OFFICIAL DIRECTORY OF FACULTY LEADERSHIP & EXECUTIVE CORE COMMAND.<br />
@@ -160,24 +244,42 @@ export default function Team() {
 
         {/* ================= LEVEL 1: FACULTIES ================= */}
         <section className="my-24">
-          <div className="flex items-center gap-4 mb-10">
-            <div className="h-4 w-4 bg-[#065cc8] shadow-[2px_2px_0px_0px_#000]" />
-            <h2 className="font-heading text-lg sm:text-xl font-semibold text-white uppercase tracking-widest px-6 py-2.5 bg-[#05103a] border-4 border-[#065cc8] shadow-[6px_6px_0px_0px_#065cc8]">
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.4 }}
+            className="flex items-center gap-4 mb-10"
+          >
+            <motion.div variants={scaleIn} className="h-4 w-4 bg-[#065cc8] shadow-[2px_2px_0px_0px_#000]" />
+            <motion.h2
+              variants={slideInLeft}
+              className="font-heading text-lg sm:text-xl font-semibold text-white uppercase tracking-widest px-6 py-2.5 bg-[#05103a] border-4 border-[#065cc8] shadow-[6px_6px_0px_0px_#065cc8]"
+            >
               [ LEVEL 1 // FACULTIES ]
-            </h2>
-            <div className="flex-1 h-1 bg-[repeating-linear-gradient(90deg,#065cc8,#065cc8_8px,transparent_8px,transparent_16px)]" />
-          </div>
+            </motion.h2>
+            <motion.div
+              variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 0.6, ease: EASE } } }}
+              style={{ originX: 0 }}
+              className="flex-1 h-1 bg-[repeating-linear-gradient(90deg,#065cc8,#065cc8_8px,transparent_8px,transparent_16px)]"
+            />
+          </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.15 }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto"
+          >
             {facultyMembers.map((member, index) => {
               const isMatch = matchesSearch(member);
               return (
                 <motion.div
                   key={member.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.15 }}
+                  variants={fadeUp}
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                   onClick={() => setSelectedNode(member)}
                   className={`relative bg-[#05103a] border-4 border-[#065cc8] p-5 sm:p-6 group hover:border-[#c0efff] hover:-translate-x-2 hover:-translate-y-2 hover:shadow-[14px_14px_0px_0px_#6dccec] active:translate-x-0 active:translate-y-0 transition-all duration-150 cursor-pointer shadow-[8px_8px_0px_0px_#065cc8] ${
                     !isMatch ? 'opacity-25 blur-[1px]' : 'opacity-100'
@@ -187,14 +289,18 @@ export default function Team() {
                   
                   <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
                     {/* Square Photo Frame with Heavy Borders */}
-                    <div className="relative w-32 h-32 shrink-0 bg-[#010101] border-4 border-[#065cc8] overflow-hidden shadow-[4px_4px_0px_0px_#000] group-hover:border-[#6dccec] transition-colors">
+                    <motion.div
+                      whileHover={{ rotate: -2 }}
+                      transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+                      className="relative w-32 h-32 shrink-0 bg-[#010101] border-4 border-[#065cc8] overflow-hidden shadow-[4px_4px_0px_0px_#000] group-hover:border-[#6dccec] transition-colors"
+                    >
                       <img
                         src={member.image}
                         alt={member.name}
                         className="w-full h-full object-cover filter contrast-110 group-hover:scale-105 transition-transform duration-300"
                       />
                       <div className="crt-scanlines absolute inset-0 opacity-30 pointer-events-none" />
-                    </div>
+                    </motion.div>
 
                     {/* Member Details */}
                     <div className="flex-1 w-full text-center sm:text-left">
@@ -246,34 +352,61 @@ export default function Team() {
                 </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </section>
 
 
         {/* Industrial Hazard Stripe Interstitial */}
-        <div className="w-full h-4 bg-[repeating-linear-gradient(45deg,#065cc8,#065cc8_14px,#010101_14px,#010101_28px)] border-y-2 border-[#065cc8] my-16 shadow-[4px_4px_0px_0px_#065cc8]" />
+        <motion.div
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: EASE }}
+          style={{ originX: 0 }}
+          className="w-full h-4 bg-[repeating-linear-gradient(45deg,#065cc8,#065cc8_14px,#010101_14px,#010101_28px)] border-y-2 border-[#065cc8] my-16 shadow-[4px_4px_0px_0px_#065cc8]"
+        />
 
 
         {/* ================= LEVEL 2: CORE ================= */}
         <section className="my-24">
-          <div className="flex items-center gap-4 mb-10">
-            <div className="h-4 w-4 bg-[#6dccec] shadow-[2px_2px_0px_0px_#000]" />
-            <h2 className="font-heading text-lg sm:text-xl font-semibold text-white uppercase tracking-widest px-6 py-2.5 bg-[#05103a] border-4 border-[#065cc8] shadow-[6px_6px_0px_0px_#065cc8]">
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.4 }}
+            className="flex items-center gap-4 mb-10"
+          >
+            <motion.div variants={scaleIn} className="h-4 w-4 bg-[#6dccec] shadow-[2px_2px_0px_0px_#000]" />
+            <motion.h2
+              variants={slideInLeft}
+              className="font-heading text-lg sm:text-xl font-semibold text-white uppercase tracking-widest px-6 py-2.5 bg-[#05103a] border-4 border-[#065cc8] shadow-[6px_6px_0px_0px_#065cc8]"
+            >
               [ LEVEL 2 // EXECUTIVE CORE ]
-            </h2>
-            <div className="flex-1 h-1 bg-[repeating-linear-gradient(90deg,#065cc8,#065cc8_8px,transparent_8px,transparent_16px)]" />
-          </div>
+            </motion.h2>
+            <motion.div
+              variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 0.6, ease: EASE } } }}
+              style={{ originX: 0 }}
+              className="flex-1 h-1 bg-[repeating-linear-gradient(90deg,#065cc8,#065cc8_8px,transparent_8px,transparent_16px)]"
+            />
+          </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.1 }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto"
+          >
             {executiveCoreMembers.map((member, index) => {
               const isMatch = matchesSearch(member);
               return (
                 <motion.div
                   key={member.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
+                  variants={{
+                    hidden: { opacity: 0, y: 30, rotate: index % 2 === 0 ? -1.5 : 1.5 },
+                    show: { opacity: 1, y: 0, rotate: 0, transition: { duration: 0.45, ease: EASE } },
+                  }}
+                  whileHover={{ scale: 1.03, rotate: index % 2 === 0 ? -1 : 1, transition: { type: 'spring', stiffness: 300, damping: 18 } }}
                   onClick={() => setSelectedNode(member)}
                   className={`relative bg-[#05103a] border-3 border-[#065cc8] p-4 group hover:border-[#c0efff] hover:-translate-x-1.5 hover:-translate-y-1.5 hover:shadow-[12px_12px_0px_0px_#6dccec] active:translate-x-0 active:translate-y-0 transition-all duration-150 cursor-pointer shadow-[6px_6px_0px_0px_#065cc8] flex flex-col justify-between ${
                     !isMatch ? 'opacity-25 blur-[1px]' : 'opacity-100'
@@ -283,7 +416,11 @@ export default function Team() {
                   
                   <div>
                     {/* Square Image Box */}
-                    <div className="relative aspect-square w-[70%] mx-auto bg-[#010101] border-3 border-[#065cc8] overflow-hidden mb-4 shadow-[4px_4px_0px_0px_#065cc8] group-hover:border-[#6dccec] transition-colors">
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                      className="relative aspect-square w-[70%] mx-auto bg-[#010101] border-3 border-[#065cc8] overflow-hidden mb-4 shadow-[4px_4px_0px_0px_#065cc8] group-hover:border-[#6dccec] transition-colors"
+                    >
                       <img
                         src={member.image}
                         alt={member.name}
@@ -296,7 +433,7 @@ export default function Team() {
                           {member.role}
                         </span>
                       </div>
-                    </div>
+                    </motion.div>
 
                     {/* Info Section */}
                     <h3 className="text-xl font-heading font-semibold text-white group-hover:text-[#6dccec] transition-colors uppercase tracking-wide">
@@ -354,19 +491,30 @@ export default function Team() {
                 </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </section>
 
 
         {/* Bottom Brutalist Status Footer Bar */}
-        <div className="relative max-w-7xl mx-auto mt-20 p-5 bg-[#05103a] border-4 border-[#065cc8] text-center font-subheading text-xs text-[#6dccec] shadow-[8px_8px_0px_0px_#065cc8]">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          className="relative max-w-7xl mx-auto mt-20 p-5 bg-[#05103a] border-4 border-[#065cc8] text-center font-subheading text-xs text-[#6dccec] shadow-[8px_8px_0px_0px_#065cc8]"
+        >
           <CornerBrackets className="border-[#6dccec]" size="w-3 h-3" />
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4">
-            <span>[ PROTOCOL::LEVEL1_AND_LEVEL2_ONLY ]</span>
-            <span className="text-white font-body font-light">S4DS TCET EXECUTIVE COMMAND 2025-26</span>
-            <span className="text-white bg-[#065cc8] px-3 py-1 border border-[#c0efff] shadow-[2px_2px_0px_0px_#000]">[SYSTEM_ONLINE]</span>
+            <motion.span variants={slideInLeft}>[ PROTOCOL::LEVEL1_AND_LEVEL2_ONLY ]</motion.span>
+            <motion.span variants={fadeUp} className="text-white font-body font-light">S4DS TCET EXECUTIVE COMMAND 2025-26</motion.span>
+            <motion.span
+              variants={scaleIn}
+              className="text-white bg-[#065cc8] px-3 py-1 border border-[#c0efff] shadow-[2px_2px_0px_0px_#000]"
+            >
+              [SYSTEM_ONLINE]
+            </motion.span>
           </div>
-        </div>
+        </motion.div>
 
       </div>
 
@@ -374,12 +522,18 @@ export default function Team() {
       {/* ================= INTERACTIVE HARSH NODE TERMINAL MODAL ================= */}
       <AnimatePresence>
         {selectedNode && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+          >
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.15 }}
+              initial={{ opacity: 0, scale: 0.9, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 30 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 24 }}
               className="relative w-full max-w-xl bg-[#05103a] border-4 border-[#6dccec] p-6 sm:p-8 shadow-[16px_16px_0px_0px_#065cc8] text-slate-100"
             >
               <CornerBrackets className="border-[#c0efff]" size="w-4 h-4" />
@@ -387,57 +541,102 @@ export default function Team() {
               {/* Close Button */}
               <button
                 onClick={() => setSelectedNode(null)}
-                className="absolute top-4 right-4 text-white bg-[#065cc8] border-2 border-[#c0efff] p-2 hover:bg-[#6dccec] hover:text-black shadow-[3px_3px_0px_0px_#000] transition-all cursor-pointer"
+                className="absolute top-4 right-4 text-white bg-[#065cc8] border-2 border-[#c0efff] p-2 hover:bg-[#6dccec] hover:text-black shadow-[3px_3px_0px_0px_#000] transition-all cursor-pointer z-10"
                 aria-label="Close Inspector"
               >
                 <X className="w-5 h-5 font-bold" />
               </button>
 
               {/* Terminal Header */}
-              <div className="flex items-center gap-2 text-xs font-subheading text-[#6dccec] border-b-3 border-[#065cc8] pb-3 mb-6">
+              <motion.div
+                initial={{ opacity: 0, x: -15 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.15 }}
+                className="flex items-center gap-2 text-xs font-subheading text-[#6dccec] border-b-3 border-[#065cc8] pb-3 mb-6"
+              >
                 <Terminal className="w-4 h-4 text-[#6dccec]" />
                 <span>NODE INSPECTOR // {selectedNode.codeName || selectedNode.nodeId || 'EXECUTIVE_NODE'}</span>
-              </div>
+              </motion.div>
 
               {/* Modal Content */}
-              <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start">
-                <div className="w-32 h-32 shrink-0 bg-[#010101] border-3 border-[#065cc8] overflow-hidden shadow-[4px_4px_0px_0px_#065cc8]">
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="flex flex-col sm:flex-row gap-6 items-center sm:items-start"
+              >
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.25, type: 'spring', stiffness: 200, damping: 18 }}
+                  className="w-32 h-32 shrink-0 bg-[#010101] border-3 border-[#065cc8] overflow-hidden shadow-[4px_4px_0px_0px_#065cc8]"
+                >
                   <img
                     src={selectedNode.image}
                     alt={selectedNode.name}
                     className="w-full h-full object-cover filter contrast-110"
                   />
-                </div>
+                </motion.div>
 
                 <div className="flex-1 text-center sm:text-left space-y-2">
-                  <div className="inline-block px-3 py-1 bg-[#065cc8] border-2 border-[#c0efff] text-white text-xs font-subheading uppercase shadow-[3px_3px_0px_0px_#000]">
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="inline-block px-3 py-1 bg-[#065cc8] border-2 border-[#c0efff] text-white text-xs font-subheading uppercase shadow-[3px_3px_0px_0px_#000]"
+                  >
                     {selectedNode.codeName || selectedNode.role}
-                  </div>
+                  </motion.div>
 
-                  <h3 className="text-2xl font-heading font-semibold text-white uppercase tracking-wide">
+                  <motion.h3
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.35 }}
+                    className="text-2xl font-heading font-semibold text-white uppercase tracking-wide"
+                  >
                     {selectedNode.name}
-                  </h3>
+                  </motion.h3>
 
-                  <p className="text-xs font-subheading text-[#6dccec] uppercase">
+                  <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="text-xs font-subheading text-[#6dccec] uppercase"
+                  >
                     {selectedNode.role} {selectedNode.designation ? `— ${selectedNode.designation}` : ''}
-                  </p>
+                  </motion.p>
 
-                  <div className="text-xs text-[#c0efff] space-y-1 pt-2 font-subheading">
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.45 }}
+                    className="text-xs text-[#c0efff] space-y-1 pt-2 font-subheading"
+                  >
                     <div>&gt; ACCESS: <span className="text-white">{selectedNode.accessLevel || 'Full Command'}</span></div>
                     <div>&gt; STATUS: <span className="text-emerald-400 px-1.5 py-0.5 bg-emerald-950 border border-emerald-500">{selectedNode.status || 'ACTIVE'}</span></div>
-                  </div>
+                  </motion.div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Bio Section */}
               {selectedNode.bio && (
-                <div className="mt-6 p-4 bg-[#010101] border-3 border-[#065cc8] text-xs text-[#c0efff] leading-relaxed shadow-[4px_4px_0px_0px_#065cc8]">
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  className="mt-6 p-4 bg-[#010101] border-3 border-[#065cc8] text-xs text-[#c0efff] leading-relaxed shadow-[4px_4px_0px_0px_#065cc8]"
+                >
                   <p className="italic font-body font-light text-sm">"{selectedNode.bio}"</p>
-                </div>
+                </motion.div>
               )}
 
               {/* Action Links */}
-              <div className="mt-6 pt-4 border-t-3 border-[#065cc8] flex flex-wrap items-center justify-between gap-3 font-subheading">
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.55 }}
+                className="mt-6 pt-4 border-t-3 border-[#065cc8] flex flex-wrap items-center justify-between gap-3 font-subheading"
+              >
                 <div className="flex items-center gap-3">
                   {selectedNode.linkedin && (
                     <a
@@ -473,13 +672,11 @@ export default function Team() {
                     <span>{selectedNode.email}</span>
                   </a>
                 )}
-              </div>
+              </motion.div>
             </motion.div>
-          </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>
   );
 }
-
-
