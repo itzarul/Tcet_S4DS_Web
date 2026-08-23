@@ -198,3 +198,62 @@
   pointer-events: none;
 }
 
+/* ===== TEAM PAGE — Cyber/Digital Brutalism (scoped to /team only) ===== */
+.team-grid {
+  background-size: 48px 48px;
+  background-image:
+    linear-gradient(to right, rgba(37, 99, 235, 0.28) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(37, 99, 235, 0.28) 1px, transparent 1px);
+}
+
+.team-grid-dense {
+  background-size: 16px 16px;
+  background-image:
+    linear-gradient(to right, rgba(56, 189, 248, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.12) 1px, transparent 1px);
+}
+
+.team-scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.32),
+    rgba(0, 0, 0, 0.32) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+}
+
+@keyframes team-beam {
+  0% { top: -10%; }
+  100% { top: 110%; }
+}
+
+.team-beam {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(to bottom, transparent, rgba(37, 99, 235, 0.45), transparent);
+  animation: team-beam 6s linear infinite;
+  pointer-events: none;
+  z-index: 40;
+}
+
+.team-vignette {
+  box-shadow: inset 0 0 130px rgba(0, 0, 0, 0.92);
+  pointer-events: none;
+}
+
+/* RGB-split glitch flicker for the hero heading */
+@keyframes team-glitch {
+  0%, 88%, 100% { text-shadow: 0 0 transparent; }
+  90% { text-shadow: 2px 0 #ff2d55, -2px 0 #22d3ee; }
+  92% { text-shadow: -2px 0 #ff2d55, 2px 0 #22d3ee; }
+  94% { text-shadow: 2px 0 #ff2d55, -2px 0 #22d3ee; }
+  96% { text-shadow: 0 0 transparent; }
+}
+
+.team-glitch {
+  animation: team-glitch 6s infinite;
+}
