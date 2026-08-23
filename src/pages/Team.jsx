@@ -424,7 +424,7 @@ export default function Team() {
                       <img
                         src={member.image}
                         alt={member.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-contain object-top group-hover:scale-105 transition-transform duration-300"
                         loading="lazy"
                       />
                       <div className="team-scanlines absolute inset-0 opacity-10 pointer-events-none z-0" />
