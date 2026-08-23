@@ -440,11 +440,6 @@ export default function Team() {
                       {member.name}
                     </h3>
 
-                    {member.bio && (
-                      <p className="text-[#c0efff]/90 text-xs mt-3 font-body font-light leading-relaxed line-clamp-3 bg-[#000000] p-2.5 border border-[#2563eb] shadow-[2px_2px_0px_0px_#2563eb]">
-                        {member.bio}
-                      </p>
-                    )}
                   </div>
 
                   {/* Actions Footer */}
