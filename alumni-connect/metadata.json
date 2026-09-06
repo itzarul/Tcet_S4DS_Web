@@ -1,0 +1,6 @@
+{
+  "name": "S4DS Alumni Connect",
+  "description": "High-fidelity brutalist single-page web section for S4DS Alumni Connect featuring a 3D levitating card, scroll-driven rotation, and dynamic contextual telemetry.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
