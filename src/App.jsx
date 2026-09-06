@@ -1,12 +1,21 @@
+
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation
+} from 'react-router-dom';
+
 import MainLayout from './layouts/MainLayout';
+
 import Home from './pages/Home';
 import Team from './pages/Team';
 import Events from './pages/Events';
 import Publications from './pages/Publications';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
+import AlumniConnect from './pages/AlumniConnect';
 import NotFound from './pages/NotFound';
 
 // Scroll to top automatically when navigation changes
@@ -24,7 +33,9 @@ export default function App() {
   return (
     <Router>
       <ScrollToTop />
+
       <Routes>
+        {/* Main S4DS website layout */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/team" element={<Team />} />
@@ -32,8 +43,13 @@ export default function App() {
           <Route path="/publications" element={<Publications />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="*" element={<NotFound />} />
         </Route>
+
+        {/* Alumni Connect — separate full-screen page */}
+        <Route path="/alumni-connect" element={<AlumniConnect />} />
+
+        {/* 404 */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
