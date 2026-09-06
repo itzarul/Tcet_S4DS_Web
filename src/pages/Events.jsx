@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { featuredEvent, eventsList } from '../data/events';
 import EventCard from '../components/EventCard';
 import Timeline from '../components/Timeline';
-import { Trophy, Calendar, Sparkles, Star, Award, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Trophy, Calendar, Sparkles, Star, Award, CheckCircle2, ArrowRight, Rocket } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function Events() {
@@ -53,6 +54,49 @@ export default function Events() {
         >
           Discover flagship national hackathons, high-impact machine learning bootcamps, and technical ideathons hosted at TCET Mumbai.
         </motion.p>
+      </section>
+
+      {/* ZEPHYR 2025 — Cosmic Gateway Spotlight Banner */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          className="relative rounded-3xl border border-violet-500/40 bg-gradient-to-br from-violet-950/80 via-zinc-950/90 to-fuchsia-950/60 backdrop-blur-2xl overflow-hidden shadow-2xl shadow-violet-600/10"
+        >
+          <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[36rem] h-[36rem] rounded-full bg-violet-600/20 blur-[110px] pointer-events-none" />
+          <div className="relative p-6 sm:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-10">
+            {/* Emblem */}
+            <div className="shrink-0 w-28 h-28 sm:w-36 sm:h-36 rounded-3xl bg-gradient-to-br from-violet-600/40 to-cyan-500/30 border border-white/10 flex items-center justify-center animate-float">
+              <span className="font-heading text-4xl sm:text-5xl font-black text-gradient-gold tracking-tight">Z25</span>
+            </div>
+
+            <div className="flex-1 text-center md:text-left">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/15 border border-violet-500/40 text-violet-300 text-[11px] font-mono mb-3">
+                <Sparkles className="w-3 h-3 animate-pulse" />
+                <span>TCET TECH FEST · COSMIC GATEWAY · 25–27 SEPT 2025</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-black text-white font-heading tracking-tight">
+                Zephyr 2025 — <span className="text-gradient-gold">Cosmic Gateway</span>
+              </h2>
+              <p className="mt-2 text-zinc-400 text-sm sm:text-base max-w-2xl">
+                58 events across Workshops, Technical, Fun, E-Gaming & Mini arenas — worth ₹1.5L+ in prizes. Dive into the full catalog.
+              </p>
+              <div className="mt-5 flex flex-wrap justify-center md:justify-start gap-3">
+                <Link
+                  to="/zephyr"
+                  className="px-6 py-3 rounded-2xl font-bold text-sm text-white bg-gradient-to-r from-violet-600 via-fuchsia-600 to-cyan-500 hover:scale-105 transition-transform shadow-xl shadow-violet-600/30 flex items-center gap-2"
+                >
+                  <Rocket className="w-4 h-4" />
+                  <span>Enter the Gateway</span>
+                </Link>
+                <span className="px-6 py-3 rounded-2xl font-mono text-xs text-violet-200 border border-violet-500/30 bg-violet-500/10 flex items-center gap-2">
+                  <Star className="w-3.5 h-3.5 fill-violet-300" /> Organized by TSDW
+                </span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </section>
 
       {/* FEATURED EVENT: ANALYTRIX 2025-26 Spotlight */}

@@ -4,6 +4,7 @@ import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home';
 import Team from './pages/Team';
 import Events from './pages/Events';
+import Zephyr from './pages/Zephyr';
 import Publications from './pages/Publications';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/team" element={<Team />} />
           <Route path="/events" element={<Events />} />
+          <Route path="/zephyr" element={<Zephyr />} />
           <Route path="/publications" element={<Publications />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />

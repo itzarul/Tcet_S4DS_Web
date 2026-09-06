@@ -31,3 +31,4 @@ ui-debug.log
 *.njsproj
 *.sln
 *.sw?
+zephyr-cache/

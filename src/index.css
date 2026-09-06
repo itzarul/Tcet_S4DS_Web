@@ -257,3 +257,33 @@
 .team-glitch {
   animation: team-glitch 6s infinite;
 }
+
+/* ===== ZEPHYR PAGE — Cosmic Gateway (scoped to /zephyr only) ===== */
+.zephyr-scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.28),
+    rgba(0, 0, 0, 0.28) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+}
+
+.zephyr-vignette {
+  box-shadow: inset 0 0 130px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+}
+
+/* RGB-split glitch flicker for the hero heading */
+@keyframes zephyr-glitch {
+  0%, 88%, 100% { text-shadow: 0 0 transparent; }
+  90% { text-shadow: 2px 0 #ff2d55, -2px 0 #a855f7; }
+  92% { text-shadow: -2px 0 #ff2d55, 2px 0 #a855f7; }
+  94% { text-shadow: 2px 0 #ff2d55, -2px 0 #a855f7; }
+  96% { text-shadow: 0 0 transparent; }
+}
+
+.zephyr-glitch {
+  animation: zephyr-glitch 6s infinite;
+}
