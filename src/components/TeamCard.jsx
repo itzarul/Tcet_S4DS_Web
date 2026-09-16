@@ -1,28 +1,51 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Linkedin, Github, Mail } from 'lucide-react';
+import React from "react";
+import { motion } from "framer-motion";
+import { Linkedin, Github, Mail } from "lucide-react";
 
-function CornerBrackets({ className = "border-[#6dccec]", size = "w-2.5 h-2.5" }) {
+function CornerBrackets({
+  className = "border-[#6dccec]",
+  size = "w-2.5 h-2.5",
+}) {
   return (
     <>
-      <span className={`absolute top-0 left-0 border-t-2 border-l-2 ${className} ${size}`} />
-      <span className={`absolute top-0 right-0 border-t-2 border-r-2 ${className} ${size}`} />
-      <span className={`absolute bottom-0 left-0 border-b-2 border-l-2 ${className} ${size}`} />
-      <span className={`absolute bottom-0 right-0 border-b-2 border-r-2 ${className} ${size}`} />
+      <span
+        className={`absolute top-0 left-0 border-t-2 border-l-2 ${className} ${size}`}
+      />
+      <span
+        className={`absolute top-0 right-0 border-t-2 border-r-2 ${className} ${size}`}
+      />
+      <span
+        className={`absolute bottom-0 left-0 border-b-2 border-l-2 ${className} ${size}`}
+      />
+      <span
+        className={`absolute bottom-0 right-0 border-b-2 border-r-2 ${className} ${size}`}
+      />
     </>
   );
 }
 
-export default function TeamCard({ member, delay = 0 }) {
+// withEntrance=false lets a parent (e.g. the scroll-assemble grid) drive
+// this card's motion instead of it fading itself in on scroll-into-view.
+export default function TeamCard({ member, delay = 0, withEntrance = true }) {
+  const Wrapper = withEntrance ? motion.div : "div";
+  const entranceProps = withEntrance
+    ? {
+        initial: { opacity: 0, y: 20 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true },
+        transition: { duration: 0.4, delay },
+      }
+    : {};
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay }}
-      className="group relative bg-[#05103a] border-2 border-[#065cc8] p-4 overflow-hidden hover:border-[#c0efff] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[7px_7px_0px_0px_#6dccec] transition-all duration-300 shadow-[4px_4px_0px_0px_#065cc8] flex flex-col justify-between font-body font-light"
+    <Wrapper
+      {...entranceProps}
+      className="group relative bg-[#05103a] border-2 border-[#065cc8] p-4 overflow-hidden hover:border-[#c0efff] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[7px_7px_0px_0px_#6dccec] transition-all duration-300 shadow-[4px_4px_0px_0px_#065cc8] flex flex-col justify-between font-body font-light h-full"
     >
-      <CornerBrackets className="border-[#065cc8] group-hover:border-[#6dccec]" size="w-3 h-3" />
+      <CornerBrackets
+        className="border-[#065cc8] group-hover:border-[#6dccec]"
+        size="w-3 h-3"
+      />
 
       {/* Image Container */}
       <div className="relative aspect-square w-[70%] mx-auto overflow-hidden bg-[#010101] border-2 border-[#065cc8] mb-4 shadow-[2px_2px_0px_0px_#065cc8]">
@@ -96,7 +119,6 @@ export default function TeamCard({ member, delay = 0 }) {
           )}
         </div>
       </div>
-    </motion.div>
+    </Wrapper>
   );
 }
-

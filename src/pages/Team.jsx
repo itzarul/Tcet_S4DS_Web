@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform, animate } from 'framer-motion';
 import { hodData, facultyInchargeData, coreTeam } from '../data/team';
 import { Linkedin, Github, Mail, Search, X, Terminal, Cpu, Shield, Award, Sparkles } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 function CornerBrackets({ className = "border-[#6dccec]", size = "w-3.5 h-3.5" }) {
   return (
@@ -122,8 +126,94 @@ export default function Team() {
     );
   };
 
+  const containerRef = useRef(null);
+
+  useLayoutEffect(() => {
+    let ctx = gsap.context(() => {
+      const cards = gsap.utils.toArray('.group');
+      
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        onLeave: () => gsap.set(cards, { clearProps: "all" }),
+        onLeaveBack: () => gsap.set(cards, { clearProps: "all" }),
+      });
+
+      // Initially hide the elements before ScrollTrigger takes over to prevent them from being visible before the reveal
+      gsap.set(cards, { opacity: 0, y: 40, scale: 0.95 });
+      cards.forEach(card => {
+        const details = card.querySelectorAll('p, .mt-4, .mt-5, .w-full.h-1, .text-xs.font-subheading');
+        gsap.set(details, { opacity: 0, y: 15 });
+      });
+
+      ScrollTrigger.batch(cards, {
+        start: "top 85%",
+        end: "bottom 15%",
+        onEnter: (batch) => {
+          batch.forEach((card, i) => {
+            const details = card.querySelectorAll('p, .mt-4, .mt-5, .w-full.h-1, .text-xs.font-subheading');
+            gsap.killTweensOf([card, details]);
+            
+            const tl = gsap.timeline({
+              onComplete: () => gsap.set([card, details], { clearProps: "all" })
+            });
+
+            tl.fromTo(card, 
+              { opacity: 0, y: 40, scale: 0.95 }, 
+              { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power3.out", delay: i * 0.15 }
+            )
+            .fromTo(details, 
+              { opacity: 0, y: 15 }, 
+              { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" }, 
+              "-=0.25"
+            );
+          });
+        },
+        onLeave: (batch) => {
+          batch.forEach((card, i) => {
+            const details = card.querySelectorAll('p, .mt-4, .mt-5, .w-full.h-1, .text-xs.font-subheading');
+            gsap.killTweensOf([card, details]);
+            gsap.to(card, { opacity: 0, y: -40, scale: 0.95, duration: 0.4, ease: "power2.in", delay: i * 0.1 });
+            gsap.to(details, { opacity: 0, y: -15, duration: 0.3 });
+          });
+        },
+        onEnterBack: (batch) => {
+          batch.forEach((card, i) => {
+            const details = card.querySelectorAll('p, .mt-4, .mt-5, .w-full.h-1, .text-xs.font-subheading');
+            gsap.killTweensOf([card, details]);
+            
+            const tl = gsap.timeline({
+              onComplete: () => gsap.set([card, details], { clearProps: "all" })
+            });
+
+            tl.fromTo(card, 
+              { opacity: 0, y: -40, scale: 0.95 }, 
+              { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power3.out", delay: i * 0.15 }
+            )
+            .fromTo(details, 
+              { opacity: 0, y: -15 }, 
+              { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" }, 
+              "-=0.25"
+            );
+          });
+        },
+        onLeaveBack: (batch) => {
+          batch.forEach((card, i) => {
+            const details = card.querySelectorAll('p, .mt-4, .mt-5, .w-full.h-1, .text-xs.font-subheading');
+            gsap.killTweensOf([card, details]);
+            gsap.to(card, { opacity: 0, y: 40, scale: 0.95, duration: 0.4, ease: "power2.in", delay: i * 0.1 });
+            gsap.to(details, { opacity: 0, y: 15, duration: 0.3 });
+          });
+        }
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, [searchQuery]);
+
   return (
-    <div className="min-h-screen bg-[#000000] text-slate-100 pt-24 pb-24 px-4 sm:px-6 lg:px-8 font-body font-light selection:bg-[#2563eb] selection:text-white relative overflow-hidden">
+    <div ref={containerRef} className="min-h-screen bg-[#000000] text-slate-100 pt-24 pb-24 px-4 sm:px-6 lg:px-8 font-body font-light selection:bg-[#2563eb] selection:text-white relative overflow-hidden">
       {/* Background Heavy Terminal Grid, CRT Scanlines & Laser Beam */}
       <div className="fixed inset-0 team-grid opacity-70 pointer-events-none z-0" />
       <div className="fixed inset-0 team-grid-dense opacity-50 pointer-events-none z-0" />
@@ -266,10 +356,6 @@ export default function Team() {
           </motion.div>
 
           <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.15 }}
             className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto"
           >
             {facultyMembers.map((member, index) => {
@@ -277,7 +363,6 @@ export default function Team() {
               return (
                 <motion.div
                   key={member.id}
-                  variants={fadeUp}
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                   onClick={() => setSelectedNode(member)}
@@ -391,10 +476,6 @@ export default function Team() {
           </motion.div>
 
           <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.1 }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto"
           >
             {executiveCoreMembers.map((member, index) => {
@@ -402,10 +483,6 @@ export default function Team() {
               return (
                 <motion.div
                   key={member.id}
-                  variants={{
-                    hidden: { opacity: 0, y: 30, rotate: index % 2 === 0 ? -1.5 : 1.5 },
-                    show: { opacity: 1, y: 0, rotate: 0, transition: { duration: 0.45, ease: EASE } },
-                  }}
                   whileHover={{ scale: 1.03, rotate: index % 2 === 0 ? -1 : 1, transition: { type: 'spring', stiffness: 300, damping: 18 } }}
                   onClick={() => setSelectedNode(member)}
                   className={`relative bg-[#0a0b12] border-3 border-[#2563eb] p-4 group hover:border-[#c0efff] hover:-translate-x-1.5 hover:-translate-y-1.5 hover:shadow-[12px_12px_0px_0px_#6dccec] active:translate-x-0 active:translate-y-0 transition-all duration-150 cursor-pointer shadow-[6px_6px_0px_0px_#2563eb] flex flex-col justify-between ${
