@@ -257,3 +257,20 @@
 .team-glitch {
   animation: team-glitch 6s infinite;
 }
+
+/* ===== TEAM PAGE TYPOGRAPHY =====
+   Display  -> Nippo      (headings, member names)
+   Primary  -> Technor    (system labels, roles, buttons, UI chrome)
+   Body     -> Arsenal SC (running text, quotes, taglines)
+   Scoped to /team so the rest of the site keeps Chakra Petch / IBM Plex Mono / Inter. */
+.team-display {
+  font-family: 'Nippo', 'Chakra Petch', sans-serif !important;
+}
+
+.team-primary {
+  font-family: 'Technor', 'IBM Plex Mono', monospace !important;
+}
+
+.team-body {
+  font-family: 'Arsenal SC', 'Inter', sans-serif !important;
+}

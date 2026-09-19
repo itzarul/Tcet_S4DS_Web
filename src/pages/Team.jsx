@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
-import { motion, AnimatePresence, useMotionValue, useTransform, animate } from 'framer-motion';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { hodData, facultyInchargeData, coreTeam } from '../data/team';
-import { Linkedin, Github, Mail, Search, X, Terminal, Cpu, Shield, Award, Sparkles } from 'lucide-react';
+import { Linkedin, Github, Mail, Search, X, Terminal, Cpu, Shield, Award, Sparkles, Globe, ArrowUpRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -64,7 +64,6 @@ function AnimatedCounter({ to }) {
 }
 
 export default function Team() {
-  const [selectedNode, setSelectedNode] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
 
   // Level 1: Faculties
@@ -143,7 +142,7 @@ export default function Team() {
       // Initially hide the elements before ScrollTrigger takes over to prevent them from being visible before the reveal
       gsap.set(cards, { opacity: 0, y: 40, scale: 0.95 });
       cards.forEach(card => {
-        const details = card.querySelectorAll('p, .mt-4, .mt-5, .w-full.h-1, .text-xs.font-subheading');
+        const details = card.querySelectorAll('.card-detail');
         gsap.set(details, { opacity: 0, y: 15 });
       });
 
@@ -152,7 +151,7 @@ export default function Team() {
         end: "bottom 15%",
         onEnter: (batch) => {
           batch.forEach((card, i) => {
-            const details = card.querySelectorAll('p, .mt-4, .mt-5, .w-full.h-1, .text-xs.font-subheading');
+            const details = card.querySelectorAll('.card-detail');
             gsap.killTweensOf([card, details]);
             
             const tl = gsap.timeline({
@@ -172,7 +171,7 @@ export default function Team() {
         },
         onLeave: (batch) => {
           batch.forEach((card, i) => {
-            const details = card.querySelectorAll('p, .mt-4, .mt-5, .w-full.h-1, .text-xs.font-subheading');
+            const details = card.querySelectorAll('.card-detail');
             gsap.killTweensOf([card, details]);
             gsap.to(card, { opacity: 0, y: -40, scale: 0.95, duration: 0.4, ease: "power2.in", delay: i * 0.1 });
             gsap.to(details, { opacity: 0, y: -15, duration: 0.3 });
@@ -180,7 +179,7 @@ export default function Team() {
         },
         onEnterBack: (batch) => {
           batch.forEach((card, i) => {
-            const details = card.querySelectorAll('p, .mt-4, .mt-5, .w-full.h-1, .text-xs.font-subheading');
+            const details = card.querySelectorAll('.card-detail');
             gsap.killTweensOf([card, details]);
             
             const tl = gsap.timeline({
@@ -200,7 +199,7 @@ export default function Team() {
         },
         onLeaveBack: (batch) => {
           batch.forEach((card, i) => {
-            const details = card.querySelectorAll('p, .mt-4, .mt-5, .w-full.h-1, .text-xs.font-subheading');
+            const details = card.querySelectorAll('.card-detail');
             gsap.killTweensOf([card, details]);
             gsap.to(card, { opacity: 0, y: 40, scale: 0.95, duration: 0.4, ease: "power2.in", delay: i * 0.1 });
             gsap.to(details, { opacity: 0, y: 15, duration: 0.3 });
@@ -213,7 +212,7 @@ export default function Team() {
   }, [searchQuery]);
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-[#000000] text-slate-100 pt-24 pb-24 px-4 sm:px-6 lg:px-8 font-body font-light selection:bg-[#2563eb] selection:text-white relative overflow-hidden">
+    <div ref={containerRef} className="min-h-screen bg-[#000000] text-slate-100 pt-24 pb-24 px-4 sm:px-6 lg:px-8 team-primary font-light selection:bg-[#2563eb] selection:text-white relative overflow-hidden">
       {/* Background Heavy Terminal Grid, CRT Scanlines & Laser Beam */}
       <div className="fixed inset-0 team-grid opacity-70 pointer-events-none z-0" />
       <div className="fixed inset-0 team-grid-dense opacity-50 pointer-events-none z-0" />
@@ -234,20 +233,20 @@ export default function Team() {
           <div className="flex flex-wrap items-center gap-3">
             <motion.span
               variants={slideInLeft}
-              className="flex items-center gap-2 text-[#6dccec] font-subheading text-xs bg-[#000000] px-3.5 py-2 border-2 border-[#2563eb] shadow-[2px_2px_0px_0px_#000]"
+              className="flex items-center gap-2 text-[#6dccec] team-primary text-xs bg-[#000000] px-3.5 py-2 border-2 border-[#2563eb] shadow-[2px_2px_0px_0px_#000]"
             >
               <span className="w-2.5 h-2.5 bg-[#2563eb] animate-ping rounded-full" />
               &gt; SYS.LOC: S4DS.TCET
             </motion.span>
             <motion.span
               variants={fadeUp}
-              className="bg-[#000000] px-3 py-2 border-2 border-[#0a0b12] text-[#6dccec] font-subheading text-xs shadow-[2px_2px_0px_0px_#000] hidden sm:inline-block"
+              className="bg-[#000000] px-3 py-2 border-2 border-[#0a0b12] text-[#6dccec] team-primary text-xs shadow-[2px_2px_0px_0px_#000] hidden sm:inline-block"
             >
               [ PROTOCOL // HARSH_BRUTALIST ]
             </motion.span>
             <motion.span
               variants={scaleIn}
-              className="bg-[#2563eb] text-white px-3 py-2 border-2 border-[#c0efff] font-subheading text-xs shadow-[2px_2px_0px_0px_#000]"
+              className="bg-[#2563eb] text-white px-3 py-2 border-2 border-[#c0efff] team-primary text-xs shadow-[2px_2px_0px_0px_#000]"
             >
               LIVE NODES: <AnimatedCounter to={totalNodes} />
             </motion.span>
@@ -264,7 +263,7 @@ export default function Team() {
               placeholder="SEARCH FACULTY / CORE NODE..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#000000] border-3 border-[#2563eb] pl-10 pr-9 py-2 text-xs font-subheading text-white placeholder-[#6dccec]/60 focus:outline-none focus:border-[#c0efff] shadow-[3px_3px_0px_0px_#2563eb] transition-all"
+              className="w-full bg-[#000000] border-3 border-[#2563eb] pl-10 pr-9 py-2 text-xs team-primary text-white placeholder-[#6dccec]/60 focus:outline-none focus:border-[#c0efff] shadow-[3px_3px_0px_0px_#2563eb] transition-all"
             />
             {searchQuery && (
               <button
@@ -283,7 +282,7 @@ export default function Team() {
             variants={scaleIn}
             initial="hidden"
             animate="show"
-            className="inline-block px-5 py-2 border-4 border-[#2563eb] bg-[#0a0b12] text-[#6dccec] font-subheading text-xs sm:text-sm tracking-widest uppercase mb-6 shadow-[6px_6px_0px_0px_#2563eb]"
+            className="inline-block px-5 py-2 border-4 border-[#2563eb] bg-[#0a0b12] text-[#6dccec] team-primary text-xs sm:text-sm tracking-widest uppercase mb-6 shadow-[6px_6px_0px_0px_#2563eb]"
           >
             ▪ HARSH_SYS // COMMAND_DIRECTIVE ▪
           </motion.div>
@@ -293,7 +292,7 @@ export default function Team() {
             variants={staggerContainer}
             initial="hidden"
             animate="show"
-            className="text-5xl sm:text-7xl md:text-8xl font-heading font-semibold text-white tracking-tight uppercase mb-4 drop-shadow-[0_6px_35px_rgba(37,99,235,0.7)]"
+            className="text-5xl sm:text-7xl md:text-8xl team-display font-semibold text-white tracking-tight uppercase mb-4 drop-shadow-[0_6px_35px_rgba(37,99,235,0.7)]"
           >
             <span className="block overflow-hidden pb-1">
               <motion.span variants={maskedLine} className="block team-glitch">
@@ -324,7 +323,7 @@ export default function Team() {
             initial="hidden"
             animate="show"
             transition={{ delay: 0.45 }}
-            className="font-body font-light text-xs sm:text-sm text-[#c0efff] max-w-3xl mx-auto uppercase tracking-wider leading-relaxed bg-[#0a0b12] p-4 border-4 border-[#2563eb] shadow-[6px_6px_0px_0px_#2563eb]"
+            className="team-body font-light text-xs sm:text-sm text-[#c0efff] max-w-3xl mx-auto uppercase tracking-wider leading-relaxed bg-[#0a0b12] p-4 border-4 border-[#2563eb] shadow-[6px_6px_0px_0px_#2563eb]"
           >
             OFFICIAL DIRECTORY OF FACULTY LEADERSHIP & EXECUTIVE CORE COMMAND.<br />
             STRUCTURAL ISOLATION COMPLETE. NO SUB-NODES ENGAGED.
@@ -344,7 +343,7 @@ export default function Team() {
             <motion.div variants={scaleIn} className="h-4 w-4 bg-[#2563eb] shadow-[2px_2px_0px_0px_#000]" />
             <motion.h2
               variants={slideInLeft}
-              className="font-heading text-lg sm:text-xl font-semibold text-white uppercase tracking-widest px-6 py-2.5 bg-[#0a0b12] border-4 border-[#2563eb] shadow-[6px_6px_0px_0px_#2563eb]"
+              className="team-display text-lg sm:text-xl font-semibold text-white uppercase tracking-widest px-6 py-2.5 bg-[#0a0b12] border-4 border-[#2563eb] shadow-[6px_6px_0px_0px_#2563eb]"
             >
               [ LEVEL 1 // FACULTIES ]
             </motion.h2>
@@ -365,74 +364,100 @@ export default function Team() {
                   key={member.id}
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                  onClick={() => setSelectedNode(member)}
-                  className={`relative bg-[#0a0b12] border-4 border-[#2563eb] p-5 sm:p-6 group hover:border-[#c0efff] hover:-translate-x-2 hover:-translate-y-2 hover:shadow-[14px_14px_0px_0px_#6dccec] active:translate-x-0 active:translate-y-0 transition-all duration-150 cursor-pointer shadow-[8px_8px_0px_0px_#2563eb] ${
+                  className={`relative bg-[#020617] border border-[#1e3a8a] p-3 sm:p-4 team-primary text-white w-full max-w-lg mx-auto group transition-all duration-500 overflow-hidden hover:border-[#38bdf8] hover:shadow-[0_0_20px_rgba(56,189,248,0.5),inset_0_0_20px_rgba(56,189,248,0.2)] ${
                     !isMatch ? 'opacity-25 blur-[1px]' : 'opacity-100'
                   }`}
                 >
-                  <CornerBrackets className="border-[#6dccec] group-hover:border-[#c0efff]" size="w-4 h-4" />
+                  {/* Outer Border accents */}
+                  <div className="absolute inset-1 border-[0.5px] border-[#38bdf8]/20 pointer-events-none group-hover:border-[#38bdf8]/50 transition-colors" />
                   
-                  <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-                    {/* Square Photo Frame with Heavy Borders */}
-                    <motion.div
-                      whileHover={{ rotate: -2 }}
-                      transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-                      className="relative w-32 h-32 shrink-0 bg-[#000000] border-4 border-[#2563eb] overflow-hidden shadow-[4px_4px_0px_0px_#000] group-hover:border-[#6dccec] transition-colors"
-                    >
-                      <img
-                        src={member.image}
-                        alt={member.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="team-scanlines absolute inset-0 opacity-10 pointer-events-none" />
-                    </motion.div>
+                  {/* Top Bar */}
+                  <div className="flex justify-between items-start border-b border-[#1e3a8a] pb-2 mb-4 relative z-10">
+                    <span className="text-[9px] sm:text-[10px] text-[#38bdf8] tracking-widest uppercase font-semibold">S4DS.EXE // MEMBER_PROFILE</span>
+                    <div className="flex items-center gap-2">
+                      <div className="flex gap-[2px] opacity-60">
+                        <div className="w-[2px] h-5 bg-[#38bdf8]"></div>
+                        <div className="w-[2px] h-5 bg-[#38bdf8]"></div>
+                        <div className="w-[2px] h-3 bg-[#38bdf8] mt-2"></div>
+                        <div className="w-[2px] h-5 bg-[#38bdf8]"></div>
+                      </div>
+                      <div className="text-[8px] text-[#38bdf8] leading-[1] font-bold text-right">
+                        <div>20</div>
+                        <div>25</div>
+                      </div>
+                    </div>
+                  </div>
 
-                    {/* Member Details */}
-                    <div className="flex-1 w-full text-center sm:text-left">
-                      <div className="inline-block px-3 py-1 bg-[#2563eb] text-white font-subheading text-xs uppercase tracking-wider mb-2 border-2 border-[#c0efff] shadow-[3px_3px_0px_0px_#000]">
-                        {member.codeName}
+                  <div className="flex gap-3 sm:gap-4 relative z-10 h-[180px] sm:h-[200px]">
+                    {/* Left Column (Text & Actions) */}
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        {/* Audio Waveform */}
+                        <div className="flex items-end gap-[2px] h-6 mb-3 opacity-80 card-detail">
+                           {[4,8,6,12,16,10,14,24,18,12,8,14,10,6,4].map((h, i) => (
+                              <div key={i} className="w-1 bg-[#38bdf8]" style={{ height: `${h}px` }} />
+                           ))}
+                           <span className="text-[#38bdf8] text-[8px] tracking-widest ml-1 hidden sm:inline-block">.....</span>
+                        </div>
+                        
+                        {/* Name */}
+                        <h2 className="text-2xl sm:text-3xl font-black uppercase leading-[1.1] tracking-tight text-white mb-2 team-display group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all duration-300" style={{ wordBreak: 'break-word' }}>
+                          {member.name.split(' ').map((part, i) => (
+                            <React.Fragment key={i}>
+                              {part}
+                              {i !== member.name.split(' ').length - 1 && <br />}
+                            </React.Fragment>
+                          ))}
+                        </h2>
+                        
+                        {/* Role & Bio */}
+                        <div className="flex items-center gap-2 mb-1 border-t border-[#1e3a8a] pt-2 card-detail">
+                          <span className="text-[9px] sm:text-[10px] text-[#38bdf8] group-hover:drop-shadow-[0_0_5px_rgba(56,189,248,0.8)] transition-all duration-300 uppercase tracking-widest">{member.role}</span>{member.linkedin && (<a href={member.linkedin} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()} title="LinkedIn profile" aria-label={`${member.name} on LinkedIn`} className="shrink-0 w-5 h-5 sm:w-6 sm:h-6 border border-[#1e3a8a] hover:border-[#38bdf8] hover:bg-[#38bdf8]/10 flex items-center justify-center transition-colors"><Linkedin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#38bdf8]" /></a>)}
+                        </div>
+                        <div className="text-[7px] sm:text-[8px] text-zinc-400 uppercase tracking-widest card-detail">
+                          PEOPLE // PROGRESS // PURPOSE
+                        </div>
+                        
+                        {/* Cyber line graphic */}
+                        <div className="flex items-center gap-1 my-3 card-detail hidden sm:flex">
+                          <div className="w-3 h-[2px] bg-[#38bdf8] skew-x-[-30deg]"></div>
+                          <div className="w-6 h-[2px] bg-[#38bdf8] skew-x-[-30deg]"></div>
+                          <div className="w-1.5 h-[2px] bg-[#38bdf8] skew-x-[-30deg]"></div>
+                          <div className="flex-1 h-[1px] bg-[#1e3a8a] relative">
+                             <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-[#38bdf8]"></div>
+                          </div>
+                        </div>
                       </div>
 
-                      <h3 className="text-2xl font-heading font-semibold text-white group-hover:text-[#6dccec] transition-colors tracking-wide uppercase">
-                        {member.name}
-                      </h3>
-
-                      <div className="text-xs font-subheading text-[#6dccec] uppercase tracking-wide mt-1">
-                        {member.role} — {member.designation}
-                      </div>
-
-                      <div className="w-full h-1 bg-[#000000] my-4 border-b border-[#2563eb]/40" />
-
-                      <p className="text-xs font-body font-light text-[#c0efff]/90 leading-relaxed italic bg-[#000000] p-3 border-2 border-[#2563eb] shadow-[3px_3px_0px_0px_#2563eb] line-clamp-3">
-                        "{member.bio}"
-                      </p>
-
-                      {/* Contact Bar */}
-                      <div className="mt-4 flex items-center justify-center sm:justify-start gap-3 font-subheading text-xs">
+                      {/* Social Buttons */}
+                      <div className="flex gap-2 mt-auto card-detail">
                         {member.email && (
-                          <a
-                            href={`mailto:${member.email}`}
-                            onClick={(e) => e.stopPropagation()}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#000000] border-2 border-[#2563eb] text-[#6dccec] shadow-[2px_2px_0px_0px_#2563eb] hover:bg-[#2563eb] hover:text-white transition-all"
-                          >
-                            <Mail className="w-3.5 h-3.5" />
-                            <span className="font-body font-light">{member.email}</span>
-                          </a>
-                        )}
-                        {member.linkedin && (
-                          <a
-                            href={member.linkedin}
-                            target="_blank"
-                            rel="noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#2563eb] border-2 border-[#c0efff] text-white shadow-[2px_2px_0px_0px_#000] hover:bg-[#6dccec] hover:text-black transition-all"
-                          >
-                            <Linkedin className="w-3.5 h-3.5" />
-                            <span>LinkedIn</span>
+                          <a href={`mailto:${member.email}`} onClick={(e) => e.stopPropagation()} className="relative w-11 h-9 sm:w-14 sm:h-11 border border-[#1e3a8a] hover:border-[#38bdf8] hover:bg-[#38bdf8]/10 flex items-center justify-center pr-2.5 pb-2 sm:pr-4 sm:pb-3 transition-colors group/btn shrink-0">
+                            <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-[#38bdf8]" />
+                            <ArrowUpRight className="absolute bottom-1 right-1 w-2.5 h-2.5 text-[#38bdf8] opacity-50 group-hover/btn:opacity-100 transition-opacity" />
                           </a>
                         )}
                       </div>
                     </div>
+
+                    {/* Right Column (Image) */}
+                    <div className="w-[100px] sm:w-[140px] border border-[#1e3a8a] p-1 flex flex-col relative shrink-0">
+                      {/* Image Header */}
+                      <div className="flex justify-between items-center text-[7px] sm:text-[8px] text-[#38bdf8] mb-1 px-0.5 uppercase tracking-widest font-bold">
+                        <span>////L</span>
+                        <span>// ONLINE</span>
+                      </div>
+                      <div className="relative w-full flex-1 overflow-hidden bg-[#020617] border border-[#1e3a8a]">
+                        <img src={member.image} className="w-full h-full object-cover object-center filter contrast-110 group-hover:scale-105 transition-transform duration-500" alt={member.name} loading="lazy" />
+                        <div className="absolute inset-0 bg-blue-900/10 mix-blend-overlay pointer-events-none"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bottom Bar */}
+                  <div className="mt-3 sm:mt-4 pt-2 border-t border-[#1e3a8a] flex justify-between items-center text-[7px] sm:text-[8px] text-[#38bdf8] uppercase tracking-widest font-bold relative z-10 card-detail">
+                    <span>A BRIGHTER TOMORROW, TOGETHER.</span>
+                    <Globe className="w-3 h-3 opacity-80" />
                   </div>
                 </motion.div>
               );
@@ -464,7 +489,7 @@ export default function Team() {
             <motion.div variants={scaleIn} className="h-4 w-4 bg-[#6dccec] shadow-[2px_2px_0px_0px_#000]" />
             <motion.h2
               variants={slideInLeft}
-              className="font-heading text-lg sm:text-xl font-semibold text-white uppercase tracking-widest px-6 py-2.5 bg-[#0a0b12] border-4 border-[#2563eb] shadow-[6px_6px_0px_0px_#2563eb]"
+              className="team-display text-lg sm:text-xl font-semibold text-white uppercase tracking-widest px-6 py-2.5 bg-[#0a0b12] border-4 border-[#2563eb] shadow-[6px_6px_0px_0px_#2563eb]"
             >
               [ LEVEL 2 // EXECUTIVE CORE ]
             </motion.h2>
@@ -483,82 +508,102 @@ export default function Team() {
               return (
                 <motion.div
                   key={member.id}
-                  whileHover={{ scale: 1.03, rotate: index % 2 === 0 ? -1 : 1, transition: { type: 'spring', stiffness: 300, damping: 18 } }}
-                  onClick={() => setSelectedNode(member)}
-                  className={`relative bg-[#0a0b12] border-3 border-[#2563eb] p-4 group hover:border-[#c0efff] hover:-translate-x-1.5 hover:-translate-y-1.5 hover:shadow-[12px_12px_0px_0px_#6dccec] active:translate-x-0 active:translate-y-0 transition-all duration-150 cursor-pointer shadow-[6px_6px_0px_0px_#2563eb] flex flex-col justify-between ${
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                  className={`relative bg-[#020617] border border-[#1e3a8a] p-3 sm:p-4 team-primary text-white w-full max-w-lg mx-auto group transition-all duration-500 overflow-hidden hover:border-[#38bdf8] hover:shadow-[0_0_20px_rgba(56,189,248,0.5),inset_0_0_20px_rgba(56,189,248,0.2)] ${
                     !isMatch ? 'opacity-25 blur-[1px]' : 'opacity-100'
                   }`}
                 >
-                  <CornerBrackets className="border-[#2563eb] group-hover:border-[#6dccec]" size="w-3 h-3" />
+                  {/* Outer Border accents */}
+                  <div className="absolute inset-1 border-[0.5px] border-[#38bdf8]/20 pointer-events-none group-hover:border-[#38bdf8]/50 transition-colors" />
                   
-                  <div>
-                    {/* Square Image Box */}
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                      className="relative aspect-square w-[70%] mx-auto bg-[#000000] border-3 border-[#2563eb] overflow-hidden mb-4 shadow-[4px_4px_0px_0px_#2563eb] group-hover:border-[#6dccec] transition-colors"
-                    >
-                      <img
-                        src={member.image}
-                        alt={member.name}
-                        className="w-full h-full object-contain object-top group-hover:scale-105 transition-transform duration-300"
-                        loading="lazy"
-                      />
-                      <div className="team-scanlines absolute inset-0 opacity-10 pointer-events-none z-0" />
-                      <div className="absolute bottom-2 right-2 z-10">
-                        <span className="px-2.5 py-1 text-[11px] font-subheading bg-[#2563eb] border border-[#c0efff] text-white shadow-[2px_2px_0px_0px_#000] uppercase tracking-wide">
-                          {member.role}
-                        </span>
+                  {/* Top Bar */}
+                  <div className="flex justify-between items-start border-b border-[#1e3a8a] pb-2 mb-4 relative z-10">
+                    <span className="text-[9px] sm:text-[10px] text-[#38bdf8] tracking-widest uppercase font-semibold">S4DS.EXE // MEMBER_PROFILE</span>
+                    <div className="flex items-center gap-2">
+                      <div className="flex gap-[2px] opacity-60">
+                        <div className="w-[2px] h-5 bg-[#38bdf8]"></div>
+                        <div className="w-[2px] h-5 bg-[#38bdf8]"></div>
+                        <div className="w-[2px] h-3 bg-[#38bdf8] mt-2"></div>
+                        <div className="w-[2px] h-5 bg-[#38bdf8]"></div>
                       </div>
-                    </motion.div>
-
-                    {/* Info Section */}
-                    <h3 className="text-xl font-heading font-semibold text-white group-hover:text-[#6dccec] transition-colors uppercase tracking-wide">
-                      {member.name}
-                    </h3>
-
+                      <div className="text-[8px] text-[#38bdf8] leading-[1] font-bold text-right">
+                        <div>20</div>
+                        <div>25</div>
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Actions Footer */}
-                  <div className="mt-5 pt-3 border-t-2 border-[#000000] flex items-center justify-between">
-                    <div className="flex items-center gap-3 text-[#6dccec] text-xs font-subheading">
-                      {member.email && (
-                        <a
-                          href={`mailto:${member.email}`}
-                          onClick={(e) => e.stopPropagation()}
-                          className="hover:text-white transition-colors flex items-center gap-1.5"
-                          title={member.email}
-                        >
-                          <Mail className="w-3.5 h-3.5" />
-                          <span className="hidden sm:inline font-body font-light">Mail</span>
-                        </a>
-                      )}
-                      {member.github && (
-                        <a
-                          href={member.github}
-                          target="_blank"
-                          rel="noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="hover:text-white transition-colors"
-                          aria-label="GitHub Profile"
-                        >
-                          <Github className="w-4 h-4" />
-                        </a>
-                      )}
+                  <div className="flex gap-3 sm:gap-4 relative z-10 h-[180px] sm:h-[200px]">
+                    {/* Left Column (Text & Actions) */}
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        {/* Audio Waveform */}
+                        <div className="flex items-end gap-[2px] h-6 mb-3 opacity-80 card-detail">
+                           {[4,8,6,12,16,10,14,24,18,12,8,14,10,6,4].map((h, i) => (
+                              <div key={i} className="w-1 bg-[#38bdf8]" style={{ height: `${h}px` }} />
+                           ))}
+                           <span className="text-[#38bdf8] text-[8px] tracking-widest ml-1 hidden sm:inline-block">.....</span>
+                        </div>
+                        
+                        {/* Name */}
+                        <h2 className="text-2xl sm:text-3xl font-black uppercase leading-[1.1] tracking-tight text-white mb-2 team-display group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all duration-300" style={{ wordBreak: 'break-word' }}>
+                          {member.name.split(' ').map((part, i) => (
+                            <React.Fragment key={i}>
+                              {part}
+                              {i !== member.name.split(' ').length - 1 && <br />}
+                            </React.Fragment>
+                          ))}
+                        </h2>
+                        
+                        {/* Role & Bio */}
+                        <div className="flex items-center gap-2 mb-1 border-t border-[#1e3a8a] pt-2 card-detail">
+                          <span className="text-[9px] sm:text-[10px] text-[#38bdf8] group-hover:drop-shadow-[0_0_5px_rgba(56,189,248,0.8)] transition-all duration-300 uppercase tracking-widest">{member.role}</span>{member.linkedin && (<a href={member.linkedin} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()} title="LinkedIn profile" aria-label={`${member.name} on LinkedIn`} className="shrink-0 w-5 h-5 sm:w-6 sm:h-6 border border-[#1e3a8a] hover:border-[#38bdf8] hover:bg-[#38bdf8]/10 flex items-center justify-center transition-colors"><Linkedin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#38bdf8]" /></a>)}
+                        </div>
+                        <div className="text-[7px] sm:text-[8px] text-zinc-400 uppercase tracking-widest card-detail">
+                          PEOPLE // PROGRESS // PURPOSE
+                        </div>
+                        
+                        {/* Cyber line graphic */}
+                        <div className="flex items-center gap-1 my-3 card-detail hidden sm:flex">
+                          <div className="w-3 h-[2px] bg-[#38bdf8] skew-x-[-30deg]"></div>
+                          <div className="w-6 h-[2px] bg-[#38bdf8] skew-x-[-30deg]"></div>
+                          <div className="w-1.5 h-[2px] bg-[#38bdf8] skew-x-[-30deg]"></div>
+                          <div className="flex-1 h-[1px] bg-[#1e3a8a] relative">
+                             <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-[#38bdf8]"></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Social Buttons */}
+                      <div className="flex gap-2 mt-auto card-detail">
+                        {member.email && (
+                          <a href={`mailto:${member.email}`} onClick={(e) => e.stopPropagation()} className="relative w-11 h-9 sm:w-14 sm:h-11 border border-[#1e3a8a] hover:border-[#38bdf8] hover:bg-[#38bdf8]/10 flex items-center justify-center pr-2.5 pb-2 sm:pr-4 sm:pb-3 transition-colors group/btn shrink-0">
+                            <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-[#38bdf8]" />
+                            <ArrowUpRight className="absolute bottom-1 right-1 w-2.5 h-2.5 text-[#38bdf8] opacity-50 group-hover/btn:opacity-100 transition-opacity" />
+                          </a>
+                        )}
+                      </div>
                     </div>
 
-                    {member.linkedin && (
-                      <a
-                        href={member.linkedin}
-                        target="_blank"
-                        rel="noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        aria-label={`${member.name} LinkedIn Profile`}
-                        className="p-2 bg-[#2563eb] border border-[#c0efff] text-white hover:bg-[#6dccec] hover:text-black transition-all shadow-[2px_2px_0px_0px_#000] hover:shadow-[3px_3px_0px_0px_#6dccec] hover:-translate-x-0.5 hover:-translate-y-0.5"
-                      >
-                        <Linkedin className="w-3.5 h-3.5" />
-                      </a>
-                    )}
+                    {/* Right Column (Image) */}
+                    <div className="w-[100px] sm:w-[140px] border border-[#1e3a8a] p-1 flex flex-col relative shrink-0">
+                      {/* Image Header */}
+                      <div className="flex justify-between items-center text-[7px] sm:text-[8px] text-[#38bdf8] mb-1 px-0.5 uppercase tracking-widest font-bold">
+                        <span>////L</span>
+                        <span>// ONLINE</span>
+                      </div>
+                      <div className="relative w-full flex-1 overflow-hidden bg-[#020617] border border-[#1e3a8a]">
+                        <img src={member.image} className="w-full h-full object-cover object-center filter contrast-110 group-hover:scale-105 transition-transform duration-500" alt={member.name} loading="lazy" />
+                        <div className="absolute inset-0 bg-blue-900/10 mix-blend-overlay pointer-events-none"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bottom Bar */}
+                  <div className="mt-3 sm:mt-4 pt-2 border-t border-[#1e3a8a] flex justify-between items-center text-[7px] sm:text-[8px] text-[#38bdf8] uppercase tracking-widest font-bold relative z-10 card-detail">
+                    <span>A BRIGHTER TOMORROW, TOGETHER.</span>
+                    <Globe className="w-3 h-3 opacity-80" />
                   </div>
                 </motion.div>
               );
@@ -573,12 +618,12 @@ export default function Team() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="relative max-w-7xl mx-auto mt-20 p-5 bg-[#0a0b12] border-4 border-[#2563eb] text-center font-subheading text-xs text-[#6dccec] shadow-[8px_8px_0px_0px_#2563eb]"
+          className="relative max-w-7xl mx-auto mt-20 p-5 bg-[#0a0b12] border-4 border-[#2563eb] text-center team-primary text-xs text-[#6dccec] shadow-[8px_8px_0px_0px_#2563eb]"
         >
           <CornerBrackets className="border-[#6dccec]" size="w-3 h-3" />
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4">
             <motion.span variants={slideInLeft}>[ PROTOCOL::LEVEL1_AND_LEVEL2_ONLY ]</motion.span>
-            <motion.span variants={fadeUp} className="text-white font-body font-light">S4DS TCET EXECUTIVE COMMAND 2025-26</motion.span>
+            <motion.span variants={fadeUp} className="text-white team-body font-light">S4DS TCET EXECUTIVE COMMAND 2025-26</motion.span>
             <motion.span
               variants={scaleIn}
               className="text-white bg-[#2563eb] px-3 py-1 border border-[#c0efff] shadow-[2px_2px_0px_0px_#000]"
@@ -589,166 +634,6 @@ export default function Team() {
         </motion.div>
 
       </div>
-
-
-      {/* ================= INTERACTIVE HARSH NODE TERMINAL MODAL ================= */}
-      <AnimatePresence>
-        {selectedNode && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 30 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 30 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 24 }}
-              className="relative w-full max-w-xl bg-[#0a0b12] border-4 border-[#6dccec] p-6 sm:p-8 shadow-[16px_16px_0px_0px_#2563eb] text-slate-100"
-            >
-              <CornerBrackets className="border-[#c0efff]" size="w-4 h-4" />
-
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedNode(null)}
-                className="absolute top-4 right-4 text-white bg-[#2563eb] border-2 border-[#c0efff] p-2 hover:bg-[#6dccec] hover:text-black shadow-[3px_3px_0px_0px_#000] transition-all cursor-pointer z-10"
-                aria-label="Close Inspector"
-              >
-                <X className="w-5 h-5 font-bold" />
-              </button>
-
-              {/* Terminal Header */}
-              <motion.div
-                initial={{ opacity: 0, x: -15 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.15 }}
-                className="flex items-center gap-2 text-xs font-subheading text-[#6dccec] border-b-3 border-[#2563eb] pb-3 mb-6"
-              >
-                <Terminal className="w-4 h-4 text-[#6dccec]" />
-                <span>NODE INSPECTOR // {selectedNode.codeName || selectedNode.nodeId || 'EXECUTIVE_NODE'}</span>
-              </motion.div>
-
-              {/* Modal Content */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="flex flex-col sm:flex-row gap-6 items-center sm:items-start"
-              >
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.25, type: 'spring', stiffness: 200, damping: 18 }}
-                  className="w-32 h-32 shrink-0 bg-[#000000] border-3 border-[#2563eb] overflow-hidden shadow-[4px_4px_0px_0px_#2563eb]"
-                >
-                  <img
-                    src={selectedNode.image}
-                    alt={selectedNode.name}
-                    className="w-full h-full object-cover"
-                  />
-                </motion.div>
-
-                <div className="flex-1 text-center sm:text-left space-y-2">
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="inline-block px-3 py-1 bg-[#2563eb] border-2 border-[#c0efff] text-white text-xs font-subheading uppercase shadow-[3px_3px_0px_0px_#000]"
-                  >
-                    {selectedNode.codeName || selectedNode.role}
-                  </motion.div>
-
-                  <motion.h3
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.35 }}
-                    className="text-2xl font-heading font-semibold text-white uppercase tracking-wide"
-                  >
-                    {selectedNode.name}
-                  </motion.h3>
-
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                    className="text-xs font-subheading text-[#6dccec] uppercase"
-                  >
-                    {selectedNode.role} {selectedNode.designation ? `— ${selectedNode.designation}` : ''}
-                  </motion.p>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.45 }}
-                    className="text-xs text-[#c0efff] space-y-1 pt-2 font-subheading"
-                  >
-                    <div>&gt; ACCESS: <span className="text-white">{selectedNode.accessLevel || 'Full Command'}</span></div>
-                    <div>&gt; STATUS: <span className="text-emerald-400 px-1.5 py-0.5 bg-emerald-950 border border-emerald-500">{selectedNode.status || 'ACTIVE'}</span></div>
-                  </motion.div>
-                </div>
-              </motion.div>
-
-              {/* Bio Section */}
-              {selectedNode.bio && (
-                <motion.div
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="mt-6 p-4 bg-[#000000] border-3 border-[#2563eb] text-xs text-[#c0efff] leading-relaxed shadow-[4px_4px_0px_0px_#2563eb]"
-                >
-                  <p className="italic font-body font-light text-sm">"{selectedNode.bio}"</p>
-                </motion.div>
-              )}
-
-              {/* Action Links */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.55 }}
-                className="mt-6 pt-4 border-t-3 border-[#2563eb] flex flex-wrap items-center justify-between gap-3 font-subheading"
-              >
-                <div className="flex items-center gap-3">
-                  {selectedNode.linkedin && (
-                    <a
-                      href={selectedNode.linkedin}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-[#2563eb] border-2 border-[#c0efff] text-white text-xs shadow-[3px_3px_0px_0px_#000] hover:bg-[#6dccec] hover:text-black transition-all"
-                    >
-                      <Linkedin className="w-4 h-4" />
-                      <span>LinkedIn</span>
-                    </a>
-                  )}
-
-                  {selectedNode.github && (
-                    <a
-                      href={selectedNode.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-[#0a0b12] border-2 border-[#2563eb] text-[#c0efff] text-xs shadow-[3px_3px_0px_0px_#2563eb] hover:bg-[#2563eb] hover:text-white transition-all"
-                    >
-                      <Github className="w-4 h-4" />
-                      <span>GitHub</span>
-                    </a>
-                  )}
-                </div>
-
-                {selectedNode.email && (
-                  <a
-                    href={`mailto:${selectedNode.email}`}
-                    className="inline-flex items-center gap-1.5 text-xs text-[#6dccec] hover:text-white transition-colors bg-[#000000] px-3 py-1.5 border border-[#2563eb] font-body font-light"
-                  >
-                    <Mail className="w-3.5 h-3.5" />
-                    <span>{selectedNode.email}</span>
-                  </a>
-                )}
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
