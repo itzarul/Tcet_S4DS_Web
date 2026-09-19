@@ -1,7 +1,8 @@
 # Dependencies
 node_modules/
 .pnpm-store/
-
+.base44
+.freebuff
 # Production build output
 dist/
 dist-ssr/
