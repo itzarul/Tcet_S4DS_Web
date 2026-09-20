@@ -1,12 +1,25 @@
 @import "tailwindcss";
 
+@theme {
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bfdbfe;
+  --color-blue-300: #93c5fd;
+  --color-blue-400: #3585f6; /* Light Blue from image */
+  --color-blue-500: #012f7c; /* Dark Blue from image */
+  --color-blue-600: #00459D;
+  --color-blue-700: #003680;
+  --color-blue-800: #1e40af;
+  --color-blue-900: #1e3a8a;
+  --color-blue-950: #172554;
+}
 @layer base {
   :root {
-    --color-bg: #09090B;
-    --color-card: #18181B;
-    --color-card-border: rgba(39, 39, 42, 0.8);
-    --color-primary: #3B82F6;
-    --color-accent: #06B6D4;
+    --color-bg: #252525; /* Dark Grey background from image */
+    --color-card: #000000; /* Black from image */
+    --color-card-border: rgba(255, 255, 255, 0.1);
+    --color-primary: #3585f6; /* Light Blue */
+    --color-accent: #012f7c; /* Dark Blue */
   }
 
   body {
@@ -39,16 +52,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #09090B;
+  background: var(--color-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #27272A;
+  background: var(--color-card);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3B82F6;
+  background: var(--color-primary);
 }
 
 /* Utilities & Glassmorphism */
@@ -73,9 +86,9 @@
 
 .glass-card-hover:hover {
   background: rgba(28, 28, 32, 0.85);
-  border-color: rgba(59, 130, 246, 0.4);
+  border-color: rgba(53, 133, 246, 0.4);
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px -10px rgba(59, 130, 246, 0.25);
+  box-shadow: 0 12px 40px -10px rgba(53, 133, 246, 0.25);
 }
 
 /* Gradient Text Utilities */
@@ -86,7 +99,7 @@
 }
 
 .text-gradient-primary {
-  background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 50%, #06B6D4 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -111,11 +124,11 @@
 }
 
 .glow-blue {
-  box-shadow: 0 0 50px -10px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 0 50px -10px rgba(53, 133, 246, 0.3);
 }
 
 .glow-cyan {
-  box-shadow: 0 0 50px -10px rgba(6, 182, 212, 0.3);
+  box-shadow: 0 0 50px -10px rgba(1, 47, 124, 0.3);
 }
 
 /* Keyframes */
@@ -146,15 +159,15 @@
 .bg-cyber-grid {
   background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(37, 99, 235, 0.18) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(37, 99, 235, 0.18) 1px, transparent 1px);
+    linear-gradient(to right, rgba(1, 47, 124, 0.3) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(1, 47, 124, 0.3) 1px, transparent 1px);
 }
 
 .bg-cyber-grid-dense {
   background-size: 20px 20px;
   background-image: 
-    linear-gradient(to right, rgba(56, 189, 248, 0.1) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(56, 189, 248, 0.1) 1px, transparent 1px);
+    linear-gradient(to right, rgba(53, 133, 246, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(53, 133, 246, 0.15) 1px, transparent 1px);
 }
 
 .crt-scanlines {
@@ -185,7 +198,7 @@
   background: linear-gradient(
     to bottom,
     transparent,
-    rgba(56, 189, 248, 0.35),
+    rgba(53, 133, 246, 0.35),
     transparent
   );
   animation: scanline-beam 6s linear infinite;
@@ -202,15 +215,15 @@
 .team-grid {
   background-size: 48px 48px;
   background-image:
-    linear-gradient(to right, rgba(37, 99, 235, 0.28) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(37, 99, 235, 0.28) 1px, transparent 1px);
+    linear-gradient(to right, rgba(1, 47, 124, 0.28) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(1, 47, 124, 0.28) 1px, transparent 1px);
 }
 
 .team-grid-dense {
   background-size: 16px 16px;
   background-image:
-    linear-gradient(to right, rgba(56, 189, 248, 0.12) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(56, 189, 248, 0.12) 1px, transparent 1px);
+    linear-gradient(to right, rgba(53, 133, 246, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(53, 133, 246, 0.12) 1px, transparent 1px);
 }
 
 .team-scanlines {
@@ -234,7 +247,7 @@
   left: 0;
   right: 0;
   height: 8px;
-  background: linear-gradient(to bottom, transparent, rgba(37, 99, 235, 0.45), transparent);
+  background: linear-gradient(to bottom, transparent, rgba(53, 133, 246, 0.45), transparent);
   animation: team-beam 6s linear infinite;
   pointer-events: none;
   z-index: 40;
@@ -248,9 +261,9 @@
 /* RGB-split glitch flicker for the hero heading */
 @keyframes team-glitch {
   0%, 88%, 100% { text-shadow: 0 0 transparent; }
-  90% { text-shadow: 2px 0 #ff2d55, -2px 0 #22d3ee; }
-  92% { text-shadow: -2px 0 #ff2d55, 2px 0 #22d3ee; }
-  94% { text-shadow: 2px 0 #ff2d55, -2px 0 #22d3ee; }
+  90% { text-shadow: 2px 0 #3585f6, -2px 0 #012f7c; }
+  92% { text-shadow: -2px 0 #3585f6, 2px 0 #012f7c; }
+  94% { text-shadow: 2px 0 #3585f6, -2px 0 #012f7c; }
   96% { text-shadow: 0 0 transparent; }
 }
 
@@ -273,4 +286,40 @@
 
 .team-body {
   font-family: 'Arsenal SC', 'Inter', sans-serif !important;
+}
+
+/* ===== TEAM CARD HOVER FOCUS =====
+   Hovering a card expands it while its grid siblings contract slightly, so the
+   attention lands on one member without the grid reflowing — only transforms change,
+   never a grid track.
+
+   The hover transform lives on the inner .team-card box while the GSAP scroll-reveal
+   animates the outer shell that wraps it. They must stay on separate elements: GSAP
+   folds the standalone scale/translate of whatever it animates into its own matrix,
+   so a shared element would bake a hover-time scale into the card permanently. */
+.team-card {
+  transform: scale(1);
+  transform-origin: center;
+  transition:
+    transform 450ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 450ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 300ms ease;
+}
+
+/* Tailwind v4 only applies its own hover: variants on true hover devices; match that. */
+@media (hover: hover) {
+  .team-card-grid:has(.team-card:hover) .team-card:not(:hover) {
+    transform: scale(0.965);
+  }
+
+  .team-card-grid .team-card:hover {
+    transform: scale(1.05);
+  }
+
+  /* Lift the whole card, not just the inner box: the grid item is its own stacking
+     context, so an inner z-index would be trapped inside it and the expanded card
+     could paint under the next one. */
+  .team-card-grid > :has(.team-card:hover) {
+    z-index: 20;
+  }
 }

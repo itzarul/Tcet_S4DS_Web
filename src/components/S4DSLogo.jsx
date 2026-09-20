@@ -35,20 +35,20 @@ export default function S4DSLogo({ className = "w-10 h-10", showText = true, siz
           />
           
           {/* Connected Nodes */}
-          <circle cx="50" cy="25" r="5" fill="#38BDF8" />
-          <circle cx="30" cy="40" r="5" fill="#60A5FA" />
-          <circle cx="70" cy="40" r="5" fill="#38BDF8" />
-          <circle cx="50" cy="58" r="6" fill="#818CF8" />
-          <circle cx="30" cy="75" r="4" fill="#60A5FA" />
-          <circle cx="70" cy="75" r="4" fill="#38BDF8" />
+          <circle cx="50" cy="25" r="5" fill="#3585f6" />
+          <circle cx="30" cy="40" r="5" fill="#3585f6" />
+          <circle cx="70" cy="40" r="5" fill="#3585f6" />
+          <circle cx="50" cy="58" r="6" fill="#012f7c" />
+          <circle cx="30" cy="75" r="4" fill="#3585f6" />
+          <circle cx="70" cy="75" r="4" fill="#3585f6" />
           
           {/* Connecting Neural Network Lines */}
-          <line x1="50" y1="25" x2="30" y2="40" stroke="#38BDF8" strokeWidth="2.5" strokeDasharray="2 2" />
-          <line x1="50" y1="25" x2="70" y2="40" stroke="#38BDF8" strokeWidth="2.5" strokeDasharray="2 2" />
-          <line x1="30" y1="40" x2="50" y2="58" stroke="#818CF8" strokeWidth="2.5" />
-          <line x1="70" y1="40" x2="50" y2="58" stroke="#818CF8" strokeWidth="2.5" />
-          <line x1="50" y1="58" x2="30" y2="75" stroke="#38BDF8" strokeWidth="2" />
-          <line x1="50" y1="58" x2="70" y2="75" stroke="#38BDF8" strokeWidth="2" />
+          <line x1="50" y1="25" x2="30" y2="40" stroke="#3585f6" strokeWidth="2.5" strokeDasharray="2 2" />
+          <line x1="50" y1="25" x2="70" y2="40" stroke="#3585f6" strokeWidth="2.5" strokeDasharray="2 2" />
+          <line x1="30" y1="40" x2="50" y2="58" stroke="#012f7c" strokeWidth="2.5" />
+          <line x1="70" y1="40" x2="50" y2="58" stroke="#012f7c" strokeWidth="2.5" />
+          <line x1="50" y1="58" x2="30" y2="75" stroke="#3585f6" strokeWidth="2" />
+          <line x1="50" y1="58" x2="70" y2="75" stroke="#3585f6" strokeWidth="2" />
 
           {/* S4DS S-Curve Center */}
           <path
@@ -61,13 +61,12 @@ export default function S4DSLogo({ className = "w-10 h-10", showText = true, siz
           {/* Gradients */}
           <defs>
             <linearGradient id="logo-grad-1" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#3B82F6" />
-              <stop offset="0.5" stopColor="#06B6D4" />
-              <stop offset="1" stopColor="#6366F1" />
+              <stop stopColor="#3585f6" />
+              <stop offset="1" stopColor="#012f7c" />
             </linearGradient>
             <linearGradient id="logo-grad-2" x1="100" y1="0" x2="0" y2="100" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#06B6D4" />
-              <stop offset="1" stopColor="#3B82F6" />
+              <stop stopColor="#012f7c" />
+              <stop offset="1" stopColor="#3585f6" />
             </linearGradient>
           </defs>
         </svg>

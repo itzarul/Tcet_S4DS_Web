@@ -6,7 +6,7 @@ export default function Timeline({ events }) {
   return (
     <div className="relative max-w-4xl mx-auto py-8">
       {/* Vertical Glowing Line */}
-      <div className="absolute left-4 sm:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-cyan-400 to-blue-600 shadow-[0_0_12px_#3b82f6] -translate-x-1/2" />
+      <div className="absolute left-4 sm:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-cyan-400 to-blue-600 shadow-[0_0_12px_#3585f6] -translate-x-1/2" />
 
       <div className="space-y-12">
         {events.map((item, index) => {

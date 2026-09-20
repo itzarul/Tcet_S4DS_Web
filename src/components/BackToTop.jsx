@@ -32,7 +32,7 @@ export default function BackToTop() {
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
-          whileHover={{ scale: 1.1, shadow: '0 0 25px rgba(59,130,246,0.6)' }}
+          whileHover={{ scale: 1.1, shadow: '0 0 25px rgba(25, 98, 255,0.6)' }}
           whileTap={{ scale: 0.95 }}
           onClick={scrollToTop}
           aria-label="Back to top"

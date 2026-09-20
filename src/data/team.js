@@ -37,7 +37,7 @@ export const coreTeam = [
     category: "Core",
     bio: "Driving operational strategies, team execution, and overarching leadership across club initiatives.",
     image: "/team/shraddha_singh.jpg",
-    linkedin: "",
+    linkedin: "https://www.linkedin.com/in/shradha-singh-9bba39437/",
   },
   {
     id: "secretary",
@@ -110,48 +110,5 @@ export const coreTeam = [
     bio: "Assisting in club administration, event logistics, and member engagement operations.",
     image: "/team/harshita_salkar.jpg",
     linkedin: "https://www.linkedin.com/in/harshita-salkar-748504388",
-  },
-];
-
-export const juniorCoreTeam = [
-  {
-    id: "j-tech-head",
-    name: "Kunal Bansal",
-    role: "Associate Tech Head",
-    category: "Junior Core",
-    bio: "Building full-stack web applications and automated ML evaluation pipelines for club events.",
-    image:
-      "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=600&auto=format&fit=crop",
-    linkedin: "https://linkedin.com/in/kunalbansal",
-  },
-  {
-    id: "j-assoc-sec",
-    name: "Divya Shetty",
-    role: "Associate Secretary",
-    category: "Junior Core",
-    bio: "Managing member databases, workshop registrations, and official documentation records.",
-    image:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop",
-    linkedin: "https://linkedin.com/in/divyashetty",
-  },
-  {
-    id: "j-sponsorship",
-    name: "Tushar Sawant",
-    role: "Associate Sponsorship Head",
-    category: "Junior Core",
-    bio: "Pitching tech proposals to local startups, cloud partners, and hackathon platform sponsors.",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop",
-    linkedin: "https://linkedin.com/in/tusharsawant",
-  },
-  {
-    id: "j-social-media",
-    name: "Kriti Rao",
-    role: "Social Media Head",
-    category: "Junior Core",
-    bio: "Curating viral Instagram reels, tech trivia posts, and live coverage during national hackathons.",
-    image:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=600&auto=format&fit=crop",
-    linkedin: "https://linkedin.com/in/kritirao",
   },
 ];

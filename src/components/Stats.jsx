@@ -49,7 +49,7 @@ export default function Stats() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: idx * 0.1 }}
-            whileHover={{ y: -4, borderColor: 'rgba(59, 130, 246, 0.4)' }}
+            whileHover={{ y: -4, borderColor: 'rgba(25, 98, 255, 0.4)' }}
             className="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-xl flex flex-col items-center justify-center text-center shadow-lg transition-all group"
           >
             <div className="w-12 h-12 rounded-xl bg-zinc-800/80 border border-zinc-700 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
