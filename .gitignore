@@ -22,6 +22,9 @@ dist-ssr/
 firebase-debug.log
 firestore-debug.log
 ui-debug.log
+vite-dev.log
+node-dev.log
+npm-dev.log
 
 # Editor & System files
 .DS_Store

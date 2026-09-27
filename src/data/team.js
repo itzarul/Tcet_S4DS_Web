@@ -10,7 +10,7 @@ export const hodData = {
 };
 
 export const facultyInchargeData = {
-  name: "Prof. Jignesh Patliil",
+  name: "Prof. Jignesh Patel",
   designation: "Faculty Incharge & Assistant Professor",
   department: "Department of  AI&DS, TCET",
   image: "../../public/team/Jignesh sir.png",
@@ -20,7 +20,109 @@ export const facultyInchargeData = {
     "https://www.linkedin.com/in/jignesh-patel-664081208?utm_source=share_via&utm_content=profile&utm_medium=member_android",
 };
 
-export const coreTeam = [
+export const coreTeam2025_2026 = [
+  {
+    id: "vedant-kadam",
+    name: "Mr. Vedant Kadam",
+    role: "Chairperson",
+    category: "Core",
+    bio: "Leading the S4DS student chapter towards excellence in Data Science, AI, and technical innovation.",
+    image: "/team/vedant_kadam.JPG",
+    linkedin: "",
+  },
+  {
+    id: "kriti-saxena",
+    name: "Ms. Kriti Saxena",
+    role: "Vice Chairperson",
+    category: "Core",
+    bio: "Driving operational strategies, team execution, and overarching leadership across club initiatives.",
+    image: "/team/kriti_saxena.JPG",
+    linkedin: "",
+  },
+  {
+    id: "tanmay-tiwari",
+    name: "Mr. Tanmay Tiwari",
+    role: "Event Manager",
+    category: "Core",
+    bio: "Managing club operations, official administrative compliance, and cross-departmental coordination.",
+    image: "/team/tanmay_tiwari.JPG",
+    linkedin: "",
+  },
+  {
+    id: "arpita-singh",
+    name: "Ms. Arpita Singh",
+    role: "Creative Head",
+    category: "Core",
+    bio: "Curating seamless technical events, workshops, hackathons, and guest speaker sessions.",
+    image: "/team/arpita_singh.JPG",
+    linkedin: "",
+  },
+  {
+    id: "shravani-rivankar",
+    name: "Ms. Shravani Rivankar",
+    role: "Scretary",
+    category: "Core",
+    bio: "Overseeing financial allocations, budgeting, expenditure tracking, and fiscal management.",
+    image: "/team/shravani_rivankar.JPG",
+    linkedin: "",
+  },
+  {
+    id: "ayesha-bijjnori",
+    name: "Ms. Ayesha Bijjnori",
+    role: "Social Media Head",
+    category: "Core",
+    bio: "Securing tier-1 corporate partnerships, event sponsorships, and industry collaborations.",
+    image: "/team/ayesha_bijjnori.JPG",
+    linkedin: "",
+  },
+  {
+    id: "priya-jha",
+    name: "Ms. Priya Jha",
+    role: "Publication Head",
+    category: "Core",
+    bio: "Directing visual design aesthetics, UI branding, creative assets, and media production.",
+    image: "/team/priya_jha.JPG",
+    linkedin: "",
+  },
+  {
+    id: "priyal-tapde",
+    name: "Ms. Priyal Tapde",
+    role: "Sponsorship Head",
+    category: "Core",
+    bio: "Leading web platform development, technical infrastructure, and AI/ML learning initiatives.",
+    image: "/team/priyal_tapde.JPG",
+    linkedin: "",
+  },
+  {
+    id: "tanzil-javali",
+    name: "Mr. Tanzil Javali",
+    role: "Treasurer",
+    category: "Core",
+    bio: "Managing digital outreach, brand presence, audience engagement, and social media campaigns.",
+    image: "/team/tanzil_javali.JPG",
+    linkedin: "",
+  },
+  {
+    id: "priyanka-gupta",
+    name: "Ms. Priyanka Gupta",
+    role: "Technical Head",
+    category: "Core",
+    bio: "Assisting in club administration, event logistics, and member engagement operations.",
+    image: "/team/priyanka_gupta.JPG",
+    linkedin: "",
+  },
+  {
+    id: "divya-singh",
+    name: "Ms. Divya Singh",
+    role: "Webmaster",
+    category: "Core",
+    bio: "Connecting S4DS with industry leaders, alumni networks, and inter-collegiate tech communities.",
+    image: "/team/divya_singh.JPG",
+    linkedin: "",
+  },
+];
+
+export const coreTeam2026_2027 = [
   {
     id: "chairperson",
     name: "Mr. Shaikh Aayan",
@@ -112,3 +214,11 @@ export const coreTeam = [
     linkedin: "https://www.linkedin.com/in/harshita-salkar-748504388",
   },
 ];
+
+export const coreTeams = {
+  "2026-2027": coreTeam2026_2027,
+  "2025-2026": coreTeam2025_2026,
+};
+
+// Default export alias for compatibility with Home and previews
+export const coreTeam = coreTeam2026_2027;
