@@ -99,13 +99,42 @@ function AnimatedCounter({ to }) {
   return <motion.span>{rounded}</motion.span>;
 }
 
+/* ---------------- Member Card Animation Variants ---------------- */
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.22, 1, 0.36, 1],
+      staggerChildren: 0.05,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const detailVariants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
 /* ---------------- Reusable Member Profile Card ---------------- */
-function MemberCard({ member, isMatch, yearDigits }) {
+const MemberCard = React.memo(function MemberCard({ member, isMatch, yearDigits }) {
   const nameParts = member.name ? member.name.split(" ") : [];
 
   return (
     <motion.div
       key={member.id}
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-50px" }}
       className={`relative w-full max-w-lg mx-auto group ${
         !isMatch ? "opacity-25 blur-[1px]" : "opacity-100"
       }`}
@@ -140,7 +169,7 @@ function MemberCard({ member, isMatch, yearDigits }) {
           <div className="flex-1 flex flex-col justify-between">
             <div>
               {/* Audio Waveform */}
-              <div className="flex items-end gap-[2px] h-6 mb-3 opacity-80 card-detail">
+              <motion.div variants={detailVariants} className="flex items-end gap-[2px] h-6 mb-3 opacity-80 card-detail">
                 {[
                   4, 8, 6, 12, 16, 10, 14, 24, 18, 12, 8, 14, 10, 6, 4,
                 ].map((h, i) => (
@@ -153,7 +182,7 @@ function MemberCard({ member, isMatch, yearDigits }) {
                 <span className="text-[#3585f6] text-[8px] tracking-widest ml-1 hidden sm:inline-block">
                   .....
                 </span>
-              </div>
+              </motion.div>
 
               {/* Name */}
               <h2
@@ -169,7 +198,7 @@ function MemberCard({ member, isMatch, yearDigits }) {
               </h2>
 
               {/* Role & Bio */}
-              <div className="flex items-center gap-2 mb-1 border-t border-[#012f7c] pt-2 card-detail">
+              <motion.div variants={detailVariants} className="flex items-center gap-2 mb-1 border-t border-[#012f7c] pt-2 card-detail">
                 <span className="text-[9px] sm:text-[10px] text-[#3585f6] group-hover:drop-shadow-[0_0_5px_rgba(53,133,246,0.8)] transition-all duration-300 uppercase tracking-widest">
                   {member.role}
                 </span>
@@ -186,24 +215,24 @@ function MemberCard({ member, isMatch, yearDigits }) {
                     <Linkedin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#3585f6]" />
                   </a>
                 )}
-              </div>
-              <div className="text-[7px] sm:text-[8px] text-zinc-400 uppercase tracking-widest card-detail">
+              </motion.div>
+              <motion.div variants={detailVariants} className="text-[7px] sm:text-[8px] text-zinc-400 uppercase tracking-widest card-detail">
                 PEOPLE // PROGRESS // PURPOSE
-              </div>
+              </motion.div>
 
               {/* Cyber line graphic */}
-              <div className="flex items-center gap-1 my-3 card-detail hidden sm:flex">
+              <motion.div variants={detailVariants} className="flex items-center gap-1 my-3 card-detail hidden sm:flex">
                 <div className="w-3 h-[2px] bg-[#3585f6] skew-x-[-30deg]"></div>
                 <div className="w-6 h-[2px] bg-[#3585f6] skew-x-[-30deg]"></div>
                 <div className="w-1.5 h-[2px] bg-[#3585f6] skew-x-[-30deg]"></div>
                 <div className="flex-1 h-[1px] bg-[#012f7c] relative">
                   <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-[#3585f6]"></div>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* Social Buttons */}
-            <div className="flex gap-2 mt-auto card-detail">
+            <motion.div variants={detailVariants} className="flex gap-2 mt-auto card-detail">
               {member.email && (
                 <a
                   href={`mailto:${member.email}`}
@@ -214,7 +243,7 @@ function MemberCard({ member, isMatch, yearDigits }) {
                   <ArrowUpRight className="absolute bottom-1 right-1 w-2.5 h-2.5 text-[#3585f6] opacity-50 group-hover/btn:opacity-100 transition-opacity" />
                 </a>
               )}
-            </div>
+            </motion.div>
           </div>
 
           {/* Right Column (Image) */}
@@ -229,7 +258,7 @@ function MemberCard({ member, isMatch, yearDigits }) {
                 src={member.image}
                 className="w-full h-full object-cover object-center filter contrast-110 group-hover:scale-105 transition-transform duration-500"
                 alt={member.name}
-                loading="lazy"
+                fetchPriority="high"
               />
               <div className="absolute inset-0 bg-[#012f7c]/10 mix-blend-overlay pointer-events-none"></div>
             </div>
@@ -237,14 +266,120 @@ function MemberCard({ member, isMatch, yearDigits }) {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-3 sm:mt-4 pt-2 border-t border-[#012f7c] flex justify-between items-center text-[7px] sm:text-[8px] text-[#3585f6] uppercase tracking-widest font-bold relative z-10 card-detail">
+        <motion.div variants={detailVariants} className="mt-3 sm:mt-4 pt-2 border-t border-[#012f7c] flex justify-between items-center text-[7px] sm:text-[8px] text-[#3585f6] uppercase tracking-widest font-bold relative z-10 card-detail">
           <span>A BRIGHTER TOMORROW, TOGETHER.</span>
           <Globe className="w-3 h-3 opacity-80" />
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );
-}
+});
+
+/* ---------------- Precomputed Core Teams ---------------- */
+const executiveCoreMembers2026 = coreTeams["2026-2027"].map((member, idx) => ({
+  ...member,
+  codeName: `CORE_CMD_26_${String(idx + 1).padStart(2, "0")}`,
+  nodeId: `ID: CR26-${String(idx + 1).padStart(2, "0")}`,
+  accessLevel: idx < 2 ? "Root Level" : "Department Lead",
+  status: "ACTIVE",
+}));
+
+const executiveCoreMembers2025 = coreTeams["2025-2026"].map((member, idx) => ({
+  ...member,
+  codeName: `CORE_CMD_25_${String(idx + 1).padStart(2, "0")}`,
+  nodeId: `ID: CR25-${String(idx + 1).padStart(2, "0")}`,
+  accessLevel: idx < 2 ? "Root Level" : "Department Lead",
+  status: "ALUMNI_CORE",
+}));
+
+const CoreTeamGrid = React.memo(function CoreTeamGrid({ members, className, searchQuery, yearDigits }) {
+  return (
+    <div
+      className={`team-card-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto ${className}`}
+    >
+      {members.map((member) => {
+        // Search filter helper function for individual members
+        const matchesSearch = () => {
+          if (!searchQuery) return true;
+          const query = searchQuery.toLowerCase();
+          return (
+            (member.name && member.name.toLowerCase().includes(query)) ||
+            (member.codeName && member.codeName.toLowerCase().includes(query)) ||
+            (member.role && member.role.toLowerCase().includes(query)) ||
+            (member.designation && member.designation.toLowerCase().includes(query)) ||
+            (member.nodeId && member.nodeId.toLowerCase().includes(query)) ||
+            (member.bio && member.bio.toLowerCase().includes(query))
+          );
+        };
+
+        return (
+          <MemberCard
+            key={member.id}
+            member={member}
+            isMatch={matchesSearch()}
+            yearDigits={yearDigits}
+          />
+        );
+      })}
+    </div>
+  );
+});
+
+// Dropdown options
+const yearOptions = [
+  {
+    id: "2026-2027",
+    label: "2026-2027 Core",
+    tag: "CURRENT ACTIVE TENURE",
+    count: coreTeam2026_2027.length,
+    status: "ACTIVE",
+  },
+  {
+    id: "2025-2026",
+    label: "2025-2026 Core",
+    tag: "PREVIOUS TENURE",
+    count: coreTeam2025_2026.length,
+    status: "ARCHIVE",
+  },
+];
+
+// Level 1: Faculties (Remains identical for both years)
+const facultyMembers = [
+  {
+    id: "fac-hod",
+    name: hodData.name,
+    codeName: "FAC_DIRECTOR_01",
+    role: "Head of Department",
+    designation: hodData.designation,
+    department: hodData.department,
+    image: hodData.image.startsWith("../../public")
+      ? hodData.image.replace("../../public", "")
+      : hodData.image,
+    bio: hodData.message,
+    linkedin: hodData.linkedin,
+    email: hodData.email,
+    nodeId: "ID: HOD-DS",
+    accessLevel: "Executive Oversight",
+    status: "ACTIVE",
+  },
+  {
+    id: "fac-incharge",
+    name: facultyInchargeData.name,
+    codeName: "FAC_MENTOR_02",
+    role: "Faculty Incharge",
+    designation: facultyInchargeData.designation,
+    department: facultyInchargeData.department,
+    image: facultyInchargeData.image.startsWith("../../public")
+      ? facultyInchargeData.image.replace("../../public", "")
+      : facultyInchargeData.image,
+    bio: facultyInchargeData.message,
+    linkedin: facultyInchargeData.linkedin,
+    email: facultyInchargeData.email,
+    nodeId: "ID: FIC-DS",
+    accessLevel: "Chief Advisory",
+    status: "ACTIVE",
+  },
+];
 
 export default function Team() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -263,79 +398,11 @@ export default function Team() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Dropdown options
-  const yearOptions = [
-    {
-      id: "2026-2027",
-      label: "2026-2027 Core",
-      tag: "CURRENT ACTIVE TENURE",
-      count: coreTeam2026_2027.length,
-      status: "ACTIVE",
-    },
-    {
-      id: "2025-2026",
-      label: "2025-2026 Core",
-      tag: "PREVIOUS TENURE",
-      count: coreTeam2025_2026.length,
-      status: "ARCHIVE",
-    },
-  ];
-
-  // Level 1: Faculties (Remains identical for both years)
-  const facultyMembers = [
-    {
-      id: "fac-hod",
-      name: hodData.name,
-      codeName: "FAC_DIRECTOR_01",
-      role: "Head of Department",
-      designation: hodData.designation,
-      department: hodData.department,
-      image: hodData.image.startsWith("../../public")
-        ? hodData.image.replace("../../public", "")
-        : hodData.image,
-      bio: hodData.message,
-      linkedin: hodData.linkedin,
-      email: hodData.email,
-      nodeId: "ID: HOD-DS",
-      accessLevel: "Executive Oversight",
-      status: "ACTIVE",
-    },
-    {
-      id: "fac-incharge",
-      name: facultyInchargeData.name,
-      codeName: "FAC_MENTOR_02",
-      role: "Faculty Incharge",
-      designation: facultyInchargeData.designation,
-      department: facultyInchargeData.department,
-      image: facultyInchargeData.image.startsWith("../../public")
-        ? facultyInchargeData.image.replace("../../public", "")
-        : facultyInchargeData.image,
-      bio: facultyInchargeData.message,
-      linkedin: facultyInchargeData.linkedin,
-      email: facultyInchargeData.email,
-      nodeId: "ID: FIC-DS",
-      accessLevel: "Chief Advisory",
-      status: "ACTIVE",
-    },
-  ];
-
-  // Level 2: Executive Core Members (Selected Year's Core)
-  const activeRawCore = coreTeams[selectedYear] || coreTeam2026_2027;
-  const executiveCoreMembers = activeRawCore.map((member, idx) => ({
-    ...member,
-    codeName:
-      selectedYear === "2026-2027"
-        ? `CORE_CMD_26_${String(idx + 1).padStart(2, "0")}`
-        : `CORE_CMD_25_${String(idx + 1).padStart(2, "0")}`,
-    nodeId:
-      selectedYear === "2026-2027"
-        ? `ID: CR26-${String(idx + 1).padStart(2, "0")}`
-        : `ID: CR25-${String(idx + 1).padStart(2, "0")}`,
-    accessLevel: idx < 2 ? "Root Level" : "Department Lead",
-    status: selectedYear === "2026-2027" ? "ACTIVE" : "ALUMNI_CORE",
-  }));
-
-  const totalNodes = facultyMembers.length + executiveCoreMembers.length;
+  const totalNodes =
+    facultyMembers.length +
+    (selectedYear === "2026-2027"
+      ? executiveCoreMembers2026.length
+      : executiveCoreMembers2025.length);
 
   // Search filter helper function
   const matchesSearch = (item) => {
@@ -353,135 +420,7 @@ export default function Team() {
 
   const containerRef = useRef(null);
 
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray(".group");
 
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top bottom",
-        end: "bottom top",
-        onLeave: () => gsap.set(cards, { clearProps: "all" }),
-        onLeaveBack: () => gsap.set(cards, { clearProps: "all" }),
-      });
-
-      // Initially hide the elements before ScrollTrigger takes over to prevent them from being visible before the reveal
-      gsap.set(cards, { opacity: 0, y: 40, scale: 0.95 });
-      cards.forEach((card) => {
-        const details = card.querySelectorAll(".card-detail");
-        gsap.set(details, { opacity: 0, y: 15 });
-      });
-
-      ScrollTrigger.batch(cards, {
-        start: "top 85%",
-        end: "bottom 15%",
-        onEnter: (batch) => {
-          batch.forEach((card, i) => {
-            const details = card.querySelectorAll(".card-detail");
-            gsap.killTweensOf([card, details]);
-
-            const tl = gsap.timeline({
-              onComplete: () =>
-                gsap.set([card, details], { clearProps: "all" }),
-            });
-
-            tl.fromTo(
-              card,
-              { opacity: 0, y: 40, scale: 0.95 },
-              {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                duration: 0.5,
-                ease: "power3.out",
-                delay: i * 0.15,
-              },
-            ).fromTo(
-              details,
-              { opacity: 0, y: 15 },
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.4,
-                stagger: 0.05,
-                ease: "power2.out",
-              },
-              "-=0.25",
-            );
-          });
-        },
-        onLeave: (batch) => {
-          batch.forEach((card, i) => {
-            const details = card.querySelectorAll(".card-detail");
-            gsap.killTweensOf([card, details]);
-            gsap.to(card, {
-              opacity: 0,
-              y: -40,
-              scale: 0.95,
-              duration: 0.4,
-              ease: "power2.in",
-              delay: i * 0.1,
-            });
-            gsap.to(details, { opacity: 0, y: -15, duration: 0.3 });
-          });
-        },
-        onEnterBack: (batch) => {
-          batch.forEach((card, i) => {
-            const details = card.querySelectorAll(".card-detail");
-            gsap.killTweensOf([card, details]);
-
-            const tl = gsap.timeline({
-              onComplete: () =>
-                gsap.set([card, details], { clearProps: "all" }),
-            });
-
-            tl.fromTo(
-              card,
-              { opacity: 0, y: -40, scale: 0.95 },
-              {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                duration: 0.5,
-                ease: "power3.out",
-                delay: i * 0.15,
-              },
-            ).fromTo(
-              details,
-              { opacity: 0, y: -15 },
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.4,
-                stagger: 0.05,
-                ease: "power2.out",
-              },
-              "-=0.25",
-            );
-          });
-        },
-        onLeaveBack: (batch) => {
-          batch.forEach((card, i) => {
-            const details = card.querySelectorAll(".card-detail");
-            gsap.killTweensOf([card, details]);
-            gsap.to(card, {
-              opacity: 0,
-              y: 40,
-              scale: 0.95,
-              duration: 0.4,
-              ease: "power2.in",
-              delay: i * 0.1,
-            });
-            gsap.to(details, { opacity: 0, y: 15, duration: 0.3 });
-          });
-        },
-      });
-
-      ScrollTrigger.refresh();
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, [searchQuery, selectedYear]);
 
   return (
     <div
@@ -854,26 +793,31 @@ export default function Team() {
               </div>
             </div>
           </div>
+          <div className="relative w-full">
+            {/* Render 2026-2027 Core */}
+            <CoreTeamGrid
+              members={executiveCoreMembers2026}
+              className={`transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                selectedYear === "2026-2027"
+                  ? "opacity-100 visible translate-y-0 relative z-10"
+                  : "opacity-0 invisible absolute top-0 left-0 right-0 -translate-y-4 pointer-events-none z-0"
+              }`}
+              searchQuery={searchQuery}
+              yearDigits="26"
+            />
 
-          <motion.div
-            key={selectedYear}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
-            className="team-card-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto"
-          >
-            {executiveCoreMembers.map((member) => {
-              const isMatch = matchesSearch(member);
-              return (
-                <MemberCard
-                  key={member.id}
-                  member={member}
-                  isMatch={isMatch}
-                  yearDigits={selectedYear.startsWith("2026") ? "26" : "25"}
-                />
-              );
-            })}
-          </motion.div>
+            {/* Render 2025-2026 Core */}
+            <CoreTeamGrid
+              members={executiveCoreMembers2025}
+              className={`transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                selectedYear === "2025-2026"
+                  ? "opacity-100 visible translate-y-0 relative z-10"
+                  : "opacity-0 invisible absolute top-0 left-0 right-0 translate-y-4 pointer-events-none z-0"
+              }`}
+              searchQuery={searchQuery}
+              yearDigits="25"
+            />
+          </div>
         </section>
       </div>
     </div>
