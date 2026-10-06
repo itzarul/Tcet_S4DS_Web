@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { featuredEvent, eventsList } from '../data/events';
 import EventCard from '../components/EventCard';
@@ -7,6 +8,7 @@ import { Trophy, Calendar, Sparkles, Star, Award, CheckCircle2, ArrowRight } fro
 import confetti from 'canvas-confetti';
 
 export default function Events() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('all');
   const [registered, setRegistered] = useState(false);
 
@@ -147,26 +149,13 @@ export default function Events() {
 
               <div className="mt-8 pt-4 border-t border-zinc-800">
                 <button
-                  onClick={handleAnalytrixRegister}
-                  disabled={registered}
-                  className={`w-full py-3.5 rounded-2xl font-bold text-sm transition-all cursor-pointer shadow-xl flex items-center justify-center gap-2 ${
-                    registered
-                      ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-                      : 'bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 text-white hover:scale-105 shadow-blue-500/25'
-                  }`}
-                >
-                  {registered ? (
-                    <>
-                      <CheckCircle2 className="w-5 h-5" />
-                      <span>Slot Reserved for Analytrix!</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Register for ANALYTRIX 2025</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </>
-                  )}
-                </button>
+                 
+  onClick={() => navigate('/events/analytrix')}
+  className="w-full py-3.5 rounded-2xl font-bold text-sm transition-all cursor-pointer shadow-xl flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 text-white hover:scale-105 shadow-blue-500/25"
+>
+  <span>View Details</span>
+  <ArrowRight className="w-4 h-4" />
+</button>
               </div>
             </div>
           </div>

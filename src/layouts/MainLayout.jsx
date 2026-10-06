@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ScrollProgress from '../components/ScrollProgress';
@@ -7,6 +7,8 @@ import BackToTop from '../components/BackToTop';
 import AnimatedBackground from '../components/AnimatedBackground';
 
 export default function MainLayout({ children }) {
+  const location = useLocation();
+
   return (
     <div className="min-h-screen flex flex-col bg-[#090D16] text-zinc-100 relative font-sans">
       {/* Top Scroll Indicator */}
@@ -16,7 +18,7 @@ export default function MainLayout({ children }) {
       <AnimatedBackground />
 
       {/* Sticky Header */}
-      <Navbar />
+{location.pathname !== '/events/analytrix' && <Navbar />}
 
       {/* Main Page Body */}
       <main className="flex-1 relative z-10">
@@ -24,7 +26,7 @@ export default function MainLayout({ children }) {
       </main>
 
       {/* Footer */}
-      <Footer />
+{location.pathname !== '/events/analytrix' && <Footer />}
 
       {/* Back to top button */}
       <BackToTop />

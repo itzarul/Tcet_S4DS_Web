@@ -8,6 +8,7 @@ import Publications from './pages/Publications';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
+import Analytrix from './pages/Analytrix';
 
 // Scroll to top automatically when navigation changes
 function ScrollToTop() {
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/team" element={<Team />} />
           <Route path="/events" element={<Events />} />
+          <Route path="/events/analytrix" element={<Analytrix />} />
           <Route path="/publications" element={<Publications />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
